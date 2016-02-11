@@ -1,11 +1,11 @@
-package com.redparty.partyplanner.controller;
+package com.redparty.partyplanner;
 
-
-import java.util.Arrays;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+
+import java.util.Arrays;
 
 @SpringBootApplication
 public class Application {
@@ -17,9 +17,8 @@ public class Application {
 
         String[] beanNames = ctx.getBeanDefinitionNames();
         Arrays.sort(beanNames);
-        for (String beanName : beanNames) {
+       /* for (String beanName : beanNames) {
             System.out.println(beanName);
-        }
+        }*/
     }
-
 }
