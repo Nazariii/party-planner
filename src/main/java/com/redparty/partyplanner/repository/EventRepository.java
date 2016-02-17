@@ -1,7 +1,12 @@
 package com.redparty.partyplanner.repository;
 
-/**
- * Created by nivash on 15.02.2016.
- */
-public class EventRepository {
+
+import com.redparty.partyplanner.common.domain.Event;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface EventRepository extends JpaRepository<Event, Long>, JpaSpecificationExecutor<Event> {
+
 }

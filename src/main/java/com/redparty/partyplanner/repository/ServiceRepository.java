@@ -1,7 +1,10 @@
 package com.redparty.partyplanner.repository;
 
-/**
- * Created by nivash on 15.02.2016.
- */
-public class ServiceRepository {
+import com.redparty.partyplanner.common.domain.Service;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ServiceRepository extends JpaRepository<Service, Long>, JpaSpecificationExecutor<Service> {
 }

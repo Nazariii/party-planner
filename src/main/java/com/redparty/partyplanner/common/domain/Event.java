@@ -21,17 +21,17 @@ public class Event extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name="user_id",nullable = false)
-    private UserEntity user;
+    private User user;
 
     @OneToMany(mappedBy = "pk.event",fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)
-    private Set<EventUnitEntity> eventUnit = new HashSet<>();
+    private Set<EventUnit> eventUnit = new HashSet<>();
 
     public enum EventStatus {
         HIDDEN, SHARED, CLOSED
     }
 
-    public Event(String name, EventStatus eventStatus, UserEntity user) {
+    public Event(String name, EventStatus eventStatus, User user) {
         this.name = name;
         this.eventStatus = eventStatus;
         this.user = user;
