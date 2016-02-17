@@ -5,13 +5,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloController {
+@CrossOrigin(origins = "http://localhost:9001")
+public class IndexController extends BaseController {
 
 
     @RequestMapping("/")
-    @CrossOrigin(origins = "http://localhost:9001")
+    @CrossOrigin(origins = "http://localhost:9000")
     public String index() {
-        return "Greetings from Spring Boot! on " ;
+        return "Hy to everybody from party planner!!!";
     }
 
 }

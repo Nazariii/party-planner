@@ -1,5 +1,6 @@
 package com.redparty.partyplanner.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class Event extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name="user_id",nullable = false)
+    @JsonManagedReference
     private User user;
 
     @OneToMany(mappedBy = "pk.event",fetch = FetchType.LAZY)
