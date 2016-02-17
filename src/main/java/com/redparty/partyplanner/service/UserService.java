@@ -9,11 +9,11 @@ public interface UserService {
 
     User findUserById(Long id);
 
-    void add(User event);
+    User add(User event);
 
-    void add(String email, String password, String name);
+    User add(String email, String password, String name);
 
     List<User> findAll();
 
-    User delete(Long id);
+    void delete(Long id);
 }

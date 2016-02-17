@@ -16,26 +16,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Long id) {
-        return null;
+        return userRepository.findOne(id);
     }
 
     @Override
-    public void add(User event) {
-
+    public User add(User event) {
+        return userRepository.save(event);
     }
 
     @Override
-    public void add(String email, String password, String name) {
-
+    public User add(String email, String password, String name) {
+        return add(new User(email, password, name));
     }
 
     @Override
     public List<User> findAll() {
-        return null;
+        return userRepository.findAll();
     }
 
     @Override
-    public User delete(Long id) {
-        return null;
+    public void delete(Long id) {
+        userRepository.delete(id);
     }
 }

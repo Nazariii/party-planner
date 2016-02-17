@@ -1,18 +1,6 @@
-
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/party_planner
-    username: root
-    password: root
-    driver-class-name: com.mysql.jdbc.Driver
-
-  jpa:
-    hibernate.ddl-auto: update
-    database: mysql
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
+  profiles:
+    active: development
   mvc:
     message-codes-resolver:
       format: PREFIX_ERROR_CODE
@@ -23,9 +11,47 @@ spring:
 server:
   #address: 192.169.1.1
   port: 9000
+  ssl:
+    enabled: false
 
 #multipart resolver
 multipart:
   max-file-size: 10Mb
-
 #debug: true
+---
+spring:
+  profiles: development
+  datasource:
+    url: jdbc:mysql://localhost:3306/party_planner?useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate.ddl-auto: update
+    database: mysql
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+---
+spring:
+  profiles: testing
+  datasource:
+    url: jdbc:h2:mem:testDB;Mode=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    platform: H2
+    username: sa
+    continue-on-error: true
+  jpa:
+    hibernate.ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+    properties:
+      hibernate:
+        format-sql: true
+  h2:
+    console:
+      enabled: true
+logging:
+  level:
+    org:
+      hibernate:
+       SQL: info
