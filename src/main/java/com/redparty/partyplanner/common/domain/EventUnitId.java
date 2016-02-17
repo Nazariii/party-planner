@@ -9,24 +9,24 @@ import java.util.Objects;
 public class EventUnitId implements Serializable {
 
     @ManyToOne
-    private EventEntity event;
+    private Event event;
 
     @ManyToOne
-    private ServiceEntity service;
+    private Service service;
 
-    public EventEntity getEvent() {
+    public Event getEvent() {
         return event;
     }
 
-    public void setEvent(EventEntity event) {
+    public void setEvent(Event event) {
         this.event = event;
     }
 
-    public ServiceEntity getService() {
+    public Service getService() {
         return service;
     }
 
-    public void setService(ServiceEntity service) {
+    public void setService(Service service) {
         this.service = service;
     }
 

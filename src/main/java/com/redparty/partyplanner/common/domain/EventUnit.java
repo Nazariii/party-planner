@@ -10,9 +10,9 @@ import java.util.Objects;
                 joinColumns = @JoinColumn(name = "event_id")),
         @AssociationOverride(name = "pk.service",
                 joinColumns = @JoinColumn(name = "service_id"))})
-public class EventUnitEntity {
+public class EventUnit {
 
-    protected EventUnitEntity(){}
+    protected EventUnit(){}
 
     @EmbeddedId
     private EventUnitId pk = new EventUnitId();
@@ -26,20 +26,20 @@ public class EventUnitEntity {
     }
 
     @Transient
-    public EventEntity getEvent() {
+    public Event getEvent() {
         return pk.getEvent();
     }
 
-    public void setEvent(EventEntity event) {
+    public void setEvent(Event event) {
         pk.setEvent(event);
     }
 
     @Transient
-    public ServiceEntity getService() {
+    public Service getService() {
         return pk.getService();
     }
 
-    public void setService(ServiceEntity service) {
+    public void setService(Service service) {
         pk.setService(service);
     }
 
@@ -55,7 +55,7 @@ public class EventUnitEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EventUnitEntity that = (EventUnitEntity) o;
+        EventUnit that = (EventUnit) o;
         return Objects.equals(pk, that.pk);
     }
 

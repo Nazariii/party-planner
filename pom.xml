@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
 
-        <start-class>com.redparty.partyplanner.controller.Application</start-class>
+        <start-class>com.redparty.partyplanner.Application</start-class>
     </properties>
 
     <dependencies>
@@ -61,6 +61,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
+            <scope>provided</scope>
+        </dependency>
 
 
     </dependencies>
