@@ -13,8 +13,7 @@ spring:
     chain:
       enabled: true
 
-security:
- oauth2:
+facebook:
   client:
     clientId: 1685405725071333
     clientSecret: 2efd243fbc95bd7e2ee823685b35f296
@@ -67,9 +66,9 @@ spring:
         format-sql: true
   h2:
     console:
-      enabled: true
+      enabled: false
 logging:
   level:
     org:
       hibernate:
-       SQL: info
+       SQL: error
