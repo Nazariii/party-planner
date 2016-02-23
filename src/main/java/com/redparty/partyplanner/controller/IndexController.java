@@ -2,9 +2,8 @@ package com.redparty.partyplanner.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@PPRestController
 @CrossOrigin(origins = "http://localhost:9001")
 public class IndexController extends BaseController {
 
