@@ -1,5 +1,6 @@
 package com.redparty.partyplanner.common.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,9 +33,11 @@ public class User extends BaseEntity{
     private String address;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private Set<Event> events = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private Set<Service> services = new HashSet<>();
 
     public String createAuthToken() {

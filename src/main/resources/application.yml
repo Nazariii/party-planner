@@ -7,6 +7,11 @@ spring:
   jackson:
     serialization:
       indent_output: true
+  devtools:
+    restart:
+      enabled: false
+    livereload:
+      enabled: false
 
 server:
   #address: 192.169.1.1
