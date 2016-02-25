@@ -24,6 +24,8 @@
         <java.version>1.8</java.version>
 
         <start-class>com.redparty.partyplanner.Application</start-class>
+        <test.rest-assured>2.8.0</test.rest-assured>
+        <lombok.version>1.16.6</lombok.version>
     </properties>
 
     <dependencies>
@@ -65,6 +67,28 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+<!--        <dependency>
+            <groupId>com.jayway.restassured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>${test.rest-assured}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.restassured</groupId>
+            <artifactId>spring-mock-mvc</artifactId>
+            <version>${test.rest-assured}</version>
+            <scope>test</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path-assert</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Spring Boot Dev tools -->
         <dependency>
@@ -77,7 +101,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.6</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
 

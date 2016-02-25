@@ -9,5 +9,5 @@
 - Spring Data JPA/ Specifications/ Hibernate 4
 - MySQL/ H2
 - Spring MVC
-- Spring Testing/ JUnit 4/ Hamcrest
+- Spring Testing/ JUnit 4/ Hamcrest/ JSON path
 - YAML/ Lombok
