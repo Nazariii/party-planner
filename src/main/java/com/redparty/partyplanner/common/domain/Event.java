@@ -1,9 +1,13 @@
 package com.redparty.partyplanner.common.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +18,7 @@ import java.util.Set;
 @Setter
 public class Event extends BaseEntity {
 
+    @NotNull
     private String name;
 
     @Enumerated(EnumType.STRING)
