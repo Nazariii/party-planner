@@ -56,6 +56,12 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
+        <!-- Validation -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -67,18 +73,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>
-            <groupId>com.jayway.restassured</groupId>
-            <artifactId>rest-assured</artifactId>
-            <version>${test.rest-assured}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.jayway.restassured</groupId>
-            <artifactId>spring-mock-mvc</artifactId>
-            <version>${test.rest-assured}</version>
-            <scope>test</scope>
-        </dependency>-->
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
@@ -89,6 +83,18 @@
             <artifactId>json-path-assert</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--        <dependency>
+                    <groupId>com.jayway.restassured</groupId>
+                    <artifactId>rest-assured</artifactId>
+                    <version>${test.rest-assured}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>com.jayway.restassured</groupId>
+                    <artifactId>spring-mock-mvc</artifactId>
+                    <version>${test.rest-assured}</version>
+                    <scope>test</scope>
+                </dependency>-->
 
         <!-- Spring Boot Dev tools -->
         <dependency>
@@ -104,7 +110,6 @@
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-
 
     </dependencies>
 

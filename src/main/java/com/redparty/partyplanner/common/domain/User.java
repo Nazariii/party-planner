@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -15,6 +16,7 @@ import java.util.*;
 public class User extends BaseEntity{
 
     @Column(unique = true, nullable = false)
+    @NotNull
     private String email;
 
     @JsonIgnore
