@@ -2,11 +2,11 @@ package com.redparty.partyplanner.service.impl;
 
 import com.redparty.partyplanner.common.domain.Service;
 import com.redparty.partyplanner.common.domain.User;
+import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.repository.ServiceRepository;
 import com.redparty.partyplanner.repository.UserRepository;
 import com.redparty.partyplanner.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.LocaleEditor;
 
 import java.util.List;
 
@@ -21,7 +21,11 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public Service findServiceById(Long id) {
-        return serviceRepository.findOne(id);
+        Service service = serviceRepository.findOne(id);
+        if (service == null) {
+            throw new ResourceNotFoundException("Service", "id", id);
+        }
+        return service;
     }
 
     @Override
@@ -33,7 +37,7 @@ public class ServiceServiceImpl implements ServiceService {
     public Service add(String name, Long userId) {
         User user = userRepository.findOne(userId);
         if (user == null) {
-            return null;
+            throw new ResourceNotFoundException("User", "id", userId);
         }
         return add(new Service(name, user));
     }

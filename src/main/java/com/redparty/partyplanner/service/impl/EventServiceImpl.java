@@ -2,6 +2,7 @@ package com.redparty.partyplanner.service.impl;
 
 import com.redparty.partyplanner.common.domain.Event;
 import com.redparty.partyplanner.common.domain.User;
+import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.repository.EventRepository;
 import com.redparty.partyplanner.repository.UserRepository;
 import com.redparty.partyplanner.service.EventService;
@@ -20,8 +21,12 @@ public class EventServiceImpl implements EventService {
     private UserRepository userRepository;
 
     @Override
-    public Event findEventById(Long id) {
-        return eventRepository.findOne(id);
+    public Event findEventById(Long id) throws ResourceNotFoundException {
+        Event event = eventRepository.findOne(id);
+        if (event == null) {
+            throw new ResourceNotFoundException("Event","id", id);
+        }
+        return event;
     }
 
     @Override
@@ -33,7 +38,7 @@ public class EventServiceImpl implements EventService {
     public Event add(String name, Event.EventStatus eventStatus, Long userId) {
         User user = userRepository.findOne(userId);
         if (user == null) {
-            return null;
+            throw new ResourceNotFoundException("User","id", userId);
         }
         return add(new Event(name, eventStatus, user));
     }

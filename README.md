@@ -4,6 +4,7 @@
 
 ###Technologies:
 
+- Java 8
 - Spring Framework 4.2
 - Spring Boot 1.3.2
 - Spring Data JPA/ Specifications/ Hibernate 4
