@@ -1,4 +1,4 @@
-package com.redparty.partyplanner.common.exception;
+package com.redparty.partyplanner.common.exception.helper;
 
 import java.util.List;
 
@@ -40,6 +40,6 @@ public class ObjectErrorResource {
     }
 
     public enum InternalCode {
-        RESOURCE_NOT_FOUND, INTERNAL_SERVER_ERROR
+        RESOURCE_NOT_FOUND, INTERNAL_SERVER_ERROR, INVALID_REQUEST
     }
 }

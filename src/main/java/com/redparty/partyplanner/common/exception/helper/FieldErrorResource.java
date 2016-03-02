@@ -1,4 +1,4 @@
-package com.redparty.partyplanner.common.exception;
+package com.redparty.partyplanner.common.exception.helper;
 
 /**
  * Class for describing errors in object's field
