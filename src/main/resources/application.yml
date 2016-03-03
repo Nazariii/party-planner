@@ -19,7 +19,6 @@ server:
   ssl:
     enabled: false
 
-#multipart resolver
 multipart:
   max-file-size: 10Mb
 #debug: true
