@@ -1,14 +1,17 @@
 package com.redparty.partyplanner.controller;
 
 import com.redparty.partyplanner.common.domain.Event;
+import com.redparty.partyplanner.common.exception.InvalidRequestException;
 import com.redparty.partyplanner.controller.annotation.PPRestController;
 import com.redparty.partyplanner.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @PPRestController
@@ -29,7 +32,10 @@ public class EventController extends BaseController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    Event save(@RequestBody Event event) {
+    Event save(@Valid @RequestBody Event event, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new InvalidRequestException("Invalid Event", bindingResult);
+        }
         return eventService.add(event);
     }
 

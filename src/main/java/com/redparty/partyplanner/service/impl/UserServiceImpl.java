@@ -1,6 +1,7 @@
 package com.redparty.partyplanner.service.impl;
 
 import com.redparty.partyplanner.common.domain.User;
+import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.repository.UserRepository;
 import com.redparty.partyplanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Long id) {
-        return userRepository.findOne(id);
+        User user = userRepository.findOne(id);
+        if (user == null) {
+            throw new ResourceNotFoundException("User", "id", id);
+        }
+        return user;
     }
 
     @Override
