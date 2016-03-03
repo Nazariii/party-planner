@@ -23,11 +23,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("SELECT email as username, password, true FROM user WHERE email=?")
-                .authoritiesByUsernameQuery("SELECT email as username, 'ROLE_USER' FROM user WHERE email=?")
-                .passwordEncoder(new BCryptPasswordEncoder());
+                .inMemoryAuthentication()
+                    .withUser("naz1").password("1234").roles("USER")
+                    .and()
+                    .withUser("admin").password("1234").roles("USER", "ADMIN") // same as .authorities("ROLE_USER", "ROLE_ADMIN")
+                    .and()
+
+                .and().jdbcAuthentication()
+                    .dataSource(dataSource)
+                    .usersByUsernameQuery("SELECT email as username, password, true FROM user WHERE email=?")
+                    .authoritiesByUsernameQuery("SELECT email as username, 'ROLE_USER' FROM user WHERE email=?")
+                    .passwordEncoder(new BCryptPasswordEncoder())
+
+                .and().ldapAuthentication()
+                    .passwordEncoder(new BCryptPasswordEncoder())
+                    .userSearchBase("ou=people")
+                    .userSearchFilter("(uid={0})")
+                    .groupSearchBase("ou=groups")
+                    .groupSearchFilter("(uniqueMember={0})")
+                    .contextSource()
+                        .root("dc=redparty,dc=com")
+                        .ldif("classpath:ldap-server.ldif");
     }
 
     @Override
