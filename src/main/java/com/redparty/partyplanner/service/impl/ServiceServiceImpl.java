@@ -2,6 +2,7 @@ package com.redparty.partyplanner.service.impl;
 
 import com.redparty.partyplanner.common.domain.Service;
 import com.redparty.partyplanner.common.domain.User;
+import com.redparty.partyplanner.common.exception.ResourceCRUDException;
 import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.repository.ServiceRepository;
 import com.redparty.partyplanner.repository.UserRepository;
@@ -21,24 +22,20 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public Service findServiceById(Long id) {
-        Service service = serviceRepository.findOne(id);
-        if (service == null) {
-            throw new ResourceNotFoundException("Service", "id", id);
-        }
-        return service;
+        return serviceRepository.findOne(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Service", "id", id));
     }
 
     @Override
     public Service add(Service service) {
-        return serviceRepository.save(service);
+        return serviceRepository.save(service)
+                .orElseThrow(() -> new ResourceCRUDException("Service", "Name", service.getName(), "Created"));
     }
 
     @Override
     public Service add(String name, Long userId) {
-        User user = userRepository.findOne(userId);
-        if (user == null) {
-            throw new ResourceNotFoundException("User", "id", userId);
-        }
+        User user = userRepository.findOne(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         return add(new Service(name, user));
     }
 

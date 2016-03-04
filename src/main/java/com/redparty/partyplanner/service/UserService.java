@@ -9,6 +9,8 @@ public interface UserService {
 
     User findUserById(Long id);
 
+    User findByEmail(String email);
+
     User add(User event);
 
     User add(String email, String password, String name);
