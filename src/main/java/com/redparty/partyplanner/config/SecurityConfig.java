@@ -1,5 +1,6 @@
 package com.redparty.partyplanner.config;
 
+import com.redparty.partyplanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.encoding.BaseDigestPasswordEncoder;
@@ -19,6 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
+
+    @Autowired
+    UserService userService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -43,7 +47,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .groupSearchFilter("(uniqueMember={0})")
                     .contextSource()
                         .root("dc=redparty,dc=com")
-                        .ldif("classpath:ldap-server.ldif");
+                        .ldif("classpath:ldap-server.ldif")
+
+                .and().and()
+                    .userDetailsService(new UserServiceConfig(userService))
+                    .passwordEncoder(new BCryptPasswordEncoder());
+
+
     }
 
     @Override
