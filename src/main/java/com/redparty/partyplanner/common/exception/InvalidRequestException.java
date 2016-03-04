@@ -12,7 +12,6 @@ public class InvalidRequestException extends BaseException {
     }
 
     public InvalidRequestException(String message, Errors errors) {
-        super(message);
-        setErrors(errors);
+        super(message, errors);
     }
 }

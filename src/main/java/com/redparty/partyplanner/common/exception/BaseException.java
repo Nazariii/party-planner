@@ -26,6 +26,11 @@ public class BaseException extends RuntimeException {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
+    public BaseException(String message, Errors errors) {
+        super(message);
+        this.errors = errors;
+    }
+
     public Errors getErrors() {
         return errors;
     }
