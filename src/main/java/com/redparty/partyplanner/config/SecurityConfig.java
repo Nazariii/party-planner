@@ -60,10 +60,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .anyRequest().authenticated()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/").access("permitAll") //SpEL
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin()
+                    .formLogin() // form based auth
                 .and()
-                .httpBasic();
+                    .httpBasic() //http based auth
+                .and()
+                    .rememberMe()
+                        .tokenValiditySeconds(1000000)
+                        .key("RedParty")
+                .and()
+                    .logout()
+                    .logoutSuccessUrl("/");
+
     }
 }
