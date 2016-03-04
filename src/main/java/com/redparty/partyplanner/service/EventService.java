@@ -3,6 +3,7 @@ package com.redparty.partyplanner.service;
 import com.redparty.partyplanner.common.domain.Event;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface EventService {
 

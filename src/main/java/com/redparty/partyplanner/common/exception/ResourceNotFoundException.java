@@ -16,12 +16,11 @@ public class ResourceNotFoundException extends BaseException {
     }
 
     public ResourceNotFoundException(String message, Errors errors) {
-        super(message);
-        setErrors(errors);
+        super(message, errors);
     }
 
     public ResourceNotFoundException(String resourceName, String resourceItem, Object resourceValue) {
-        super(String.format("Resource '%s' with '%s' = '%s' was not found", resourceName, resourceItem, resourceValue));
+        this(resourceName, resourceItem, resourceValue, null);
     }
 
     public ResourceNotFoundException(String resourceName, String resourceItem, Object resourceValue, Errors errors) {

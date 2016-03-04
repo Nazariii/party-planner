@@ -1,6 +1,7 @@
 package com.redparty.partyplanner.service.impl;
 
 import com.redparty.partyplanner.common.domain.User;
+import com.redparty.partyplanner.common.exception.ResourceCRUDException;
 import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.repository.UserRepository;
 import com.redparty.partyplanner.service.UserService;
@@ -17,16 +18,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Long id) {
-        User user = userRepository.findOne(id);
-        if (user == null) {
-            throw new ResourceNotFoundException("User", "id", id);
-        }
-        return user;
+        return userRepository.findOne(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
     }
 
     @Override
-    public User add(User event) {
-        return userRepository.save(event);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+    }
+
+    @Override
+    public User add(User user) {
+        return userRepository.save(user)
+                .orElseThrow(() -> new ResourceCRUDException("User", "Email", user.getEmail(), "Created"));
     }
 
     @Override
