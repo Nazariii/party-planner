@@ -1,12 +1,15 @@
 package com.redparty.partyplanner.common.domain.dto;
 
-import com.redparty.partyplanner.common.domain.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserCreationDTO {
 
     @NotEmpty
