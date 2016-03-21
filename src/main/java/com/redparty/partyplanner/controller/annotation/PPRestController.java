@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @RestController
-@CrossOrigin(origins = "http://localhost:9000")
+@CrossOrigin(origins = {"http://postman"})
 @Inherited
 public @interface PPRestController {
 }

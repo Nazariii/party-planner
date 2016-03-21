@@ -40,6 +40,6 @@ public class ObjectErrorResource {
     }
 
     public enum InternalCode {
-        RESOURCE_NOT_FOUND, INTERNAL_SERVER_ERROR, INVALID_REQUEST
+        RESOURCE_NOT_FOUND, INTERNAL_SERVER_ERROR, INVALID_REQUEST, UNAUTHORIZED
     }
 }
