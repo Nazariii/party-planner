@@ -11,11 +11,13 @@ public interface UserService {
 
     User findByEmail(String email);
 
-    User add(User event);
+    User add(User user);
 
-    User add(String email, String password, String name);
+    User add(String email, String password, String name, String phone);
 
     List<User> findAll();
 
     void delete(Long id);
+
+    boolean existsWithEmail(String email);
 }
