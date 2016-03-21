@@ -1,11 +1,10 @@
-package com.redparty.partyplanner.controller;
+package com.redparty.partyplanner.controller.util;
 
 import com.redparty.partyplanner.common.exception.BaseException;
 import com.redparty.partyplanner.common.exception.InvalidRequestException;
 import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.common.exception.helper.FieldErrorResource;
 import com.redparty.partyplanner.common.exception.helper.ObjectErrorResource;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
