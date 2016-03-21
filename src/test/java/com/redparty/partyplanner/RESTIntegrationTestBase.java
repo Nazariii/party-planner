@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
 
 @WebAppConfiguration
 public abstract class RESTIntegrationTestBase<T> extends IntegrationTestBase {
@@ -44,6 +45,8 @@ public abstract class RESTIntegrationTestBase<T> extends IntegrationTestBase {
 
     @Before
     public void setUp() {
-        mockMvc = webAppContextSetup(context).build();
+        mockMvc = webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
     }
 }
