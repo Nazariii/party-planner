@@ -18,11 +18,34 @@ server:
   port: 9000
   ssl:
     enabled: false
+  tomcat:
+    accesslog:
+      enabled: true
+
 
 multipart:
   max-file-size: 10Mb
+  max-request-size: 10mb
+
+
+
+security:
+  basic:
+    enabled: false
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+        security: debug
+
+
 #debug: true
+
+
 ---
+
+
 spring:
   profiles: development
   datasource:
@@ -36,7 +59,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+
 ---
+
+
 spring:
   profiles: testing
   datasource:

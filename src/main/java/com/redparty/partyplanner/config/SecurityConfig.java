@@ -1,8 +1,12 @@
 package com.redparty.partyplanner.config;
 
+import com.redparty.partyplanner.config.csrf.CsrfTokenResponseCookieBindingFilter;
 import com.redparty.partyplanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.encoding.BaseDigestPasswordEncoder;
 import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
@@ -11,22 +15,35 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 
 import javax.sql.DataSource;
 
 @EnableWebSecurity
 @Configuration
+@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     @Autowired
-    UserService userService;
+    private UserServiceConfig userServiceConfig;
+
+    @Autowired
+    private PasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    AuthEntryPoint authEntryPoint;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
+
                 .inMemoryAuthentication()
                     .withUser("naz1").password("1234").roles("USER")
                     .and()
@@ -37,10 +54,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .dataSource(dataSource)
                     .usersByUsernameQuery("SELECT email as username, password, true FROM user WHERE email=?")
                     .authoritiesByUsernameQuery("SELECT email as username, 'ROLE_USER' FROM user WHERE email=?")
-                    .passwordEncoder(new BCryptPasswordEncoder())
+                    .passwordEncoder(bCryptPasswordEncoder)
 
                 .and().ldapAuthentication()
-                    .passwordEncoder(new BCryptPasswordEncoder())
+                    .passwordEncoder(bCryptPasswordEncoder)
                     .userSearchBase("ou=people")
                     .userSearchFilter("(uid={0})")
                     .groupSearchBase("ou=groups")
@@ -50,8 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .ldif("classpath:ldap-server.ldif")
 
                 .and().and()
-                    .userDetailsService(new UserServiceConfig(userService))
-                    .passwordEncoder(new BCryptPasswordEncoder());
+                    .userDetailsService(userServiceConfig)
+                    .passwordEncoder(bCryptPasswordEncoder);
 
 
     }
@@ -60,11 +77,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
+                    .antMatchers(HttpMethod.OPTIONS, "/*/**").permitAll()
+                    .antMatchers("/", "/login").permitAll()
                     .antMatchers("/").access("permitAll") //SpEL
                     .anyRequest().authenticated()
                 .and()
                     .formLogin() // form based auth
+                .and()
+                    .exceptionHandling().authenticationEntryPoint(authEntryPoint) //todo
                 .and()
                     .httpBasic() //http based auth
                 .and()
@@ -73,7 +93,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .key("RedParty")
                 .and()
                     .logout()
-                    .logoutSuccessUrl("/");
+                    .logoutSuccessUrl("/")
+                    .deleteCookies("remember-me")
+                .and()
+
+                    .csrf().requireCsrfProtectionMatcher(
+                            new AndRequestMatcher(
+
+                                    new NegatedRequestMatcher(new AntPathRequestMatcher("/", HttpMethod.OPTIONS.toString())),
+                                    new NegatedRequestMatcher(new AntPathRequestMatcher("/login*/**", HttpMethod.OPTIONS.toString())),
+                                    new NegatedRequestMatcher(new AntPathRequestMatcher("/logout*/**", HttpMethod.OPTIONS.toString())),
+
+                                    new NegatedRequestMatcher(new AntPathRequestMatcher("/**", HttpMethod.GET.toString())),
+                                    new NegatedRequestMatcher(new AntPathRequestMatcher("/**", HttpMethod.HEAD.toString())),
+                                    new NegatedRequestMatcher(new AntPathRequestMatcher("/**", HttpMethod.OPTIONS.toString())),
+                                    new NegatedRequestMatcher(new AntPathRequestMatcher("/**", HttpMethod.TRACE.toString()))
+                            )
+                    )
+                .and()
+                    .addFilterAfter(new CsrfTokenResponseCookieBindingFilter(), CsrfFilter.class); // CSRF tokens handling;
 
     }
 }
