@@ -1,6 +1,5 @@
 package com.redparty.partyplanner.service;
 
-import com.redparty.partyplanner.common.domain.Event;
 import com.redparty.partyplanner.common.domain.Service;
 
 import java.util.List;
