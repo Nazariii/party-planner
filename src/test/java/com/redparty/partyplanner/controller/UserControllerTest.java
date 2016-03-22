@@ -93,7 +93,6 @@ public class UserControllerTest extends RESTIntegrationTestBase<UserController> 
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)
                     .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("$.fieldErrorResources", hasSize(3)))
                 .andExpect(jsonPath("$.fieldErrorResources[*].field", containsInAnyOrder("password", "email", "name")))
@@ -105,7 +104,6 @@ public class UserControllerTest extends RESTIntegrationTestBase<UserController> 
 
         mockMvc.perform(delete(BASE + "/2")
                     .with(csrf()))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 }

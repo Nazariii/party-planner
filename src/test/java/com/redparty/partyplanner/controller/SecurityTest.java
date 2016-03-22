@@ -68,7 +68,6 @@ public class SecurityTest extends RESTIntegrationTestBase<UserController> {
         mockMvc
                 .perform(get("/user/")
                         .header(CORSRequestHeader, CORSHeaderValue))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated());
     }
@@ -79,7 +78,6 @@ public class SecurityTest extends RESTIntegrationTestBase<UserController> {
         mockMvc
                 .perform(get("/user/")
                         .header(CORSRequestHeader, CORSHeaderWrongValue))
-                .andDo(print())
                 .andExpect(status().isForbidden());
     }
 }

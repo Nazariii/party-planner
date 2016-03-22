@@ -43,34 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-
-                .inMemoryAuthentication()
-                    .withUser("naz1").password("1234").roles("USER")
-                    .and()
-                    .withUser("admin").password("1234").roles("USER", "ADMIN") // same as .authorities("ROLE_USER", "ROLE_ADMIN")
-                    .and()
-
-                .and().jdbcAuthentication()
-                    .dataSource(dataSource)
-                    .usersByUsernameQuery("SELECT email as username, password, true FROM user WHERE email=?")
-                    .authoritiesByUsernameQuery("SELECT email as username, 'ROLE_USER' FROM user WHERE email=?")
-                    .passwordEncoder(bCryptPasswordEncoder)
-
-                .and().ldapAuthentication()
-                    .passwordEncoder(bCryptPasswordEncoder)
-                    .userSearchBase("ou=people")
-                    .userSearchFilter("(uid={0})")
-                    .groupSearchBase("ou=groups")
-                    .groupSearchFilter("(uniqueMember={0})")
-                    .contextSource()
-                        .root("dc=redparty,dc=com")
-                        .ldif("classpath:ldap-server.ldif")
-
-                .and().and()
-                    .userDetailsService(userServiceConfig)
-                    .passwordEncoder(bCryptPasswordEncoder);
-
-
+                .userDetailsService(userServiceConfig)
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Override
@@ -78,9 +52,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers(HttpMethod.OPTIONS, "/*/**").permitAll()
-                    .antMatchers("/", "/login").permitAll()
+                    .antMatchers("/login").permitAll()
                     .antMatchers("/").access("permitAll") //SpEL
                     .anyRequest().authenticated()
+
                 .and()
                     .formLogin() // form based auth
                 .and()
@@ -95,8 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .logout()
                     .logoutSuccessUrl("/")
                     .deleteCookies("remember-me")
-                .and()
 
+                .and()
                     .csrf().requireCsrfProtectionMatcher(
                             new AndRequestMatcher(
 
