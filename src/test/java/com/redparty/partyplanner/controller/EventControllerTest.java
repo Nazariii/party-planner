@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redparty.partyplanner.RESTIntegrationTestBase;
 import com.redparty.partyplanner.common.domain.Event;
 import com.redparty.partyplanner.common.domain.User;
+import com.redparty.partyplanner.common.domain.dto.EventDTO;
 import com.redparty.partyplanner.repository.UserRepository;
+import com.redparty.partyplanner.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,7 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
     private static final int EVENT_ID = 1;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Test
     public void getAll() throws Exception {
@@ -71,32 +73,41 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
                 .andExpect(jsonPath("$.fieldErrorResources", hasSize(0)));
     }
 
-    /*@Test
+    @Test
     public void addEventTest() throws Exception {
-        User user = userRepository.findOne(1L).get();
-        user.setCreationDate(null);
-        Event event = new Event(NAME, Event.EventStatus.CLOSED, user);
-        //event.set
+
+        EventDTO event = new EventDTO(NAME, EVENT_STATUS, "1");
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(event);
 
-        mockMvc.perform(post(BASE + "add").with(csrf())
-                .contentType(MediaType.APPLICATION_JSON)
-                //.param("event",json)
-                //.content(json)
-                .content("{'id':4,'name':'one','eventStatus':'CLOSED','user':{" +
-                        "'id':1,'email':'email','authToken':'auth_token','name':'name','phone':null,'address':null}" +
-                        "}")
-                .accept(MediaType.APPLICATION_JSON))
-
-                //.param("event",json)
-
+        mockMvc.perform(post(BASE + "add")
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json)
+                    .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                // .andExpect(content().contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(NAME)))
-                .andExpect(jsonPath("$.eventStatus", is(EVENT_STATUS)))
-                .andDo(print());
-    }*/
+                .andExpect(jsonPath("$.eventStatus", is(EVENT_STATUS)));
+    }
+
+    @Test
+    public void addEvent2Test() throws Exception {
+
+        EventDTO event = new EventDTO(NAME, "", "1");
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(event);
+
+        mockMvc.perform(post(BASE + "add")
+                    .with(csrf())
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(json)
+                    .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(NAME)))
+                .andExpect(jsonPath("$.eventStatus", is("HIDDEN")));
+    }
 }
