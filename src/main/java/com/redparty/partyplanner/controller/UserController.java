@@ -6,6 +6,8 @@ import com.redparty.partyplanner.common.exception.InvalidRequestException;
 import com.redparty.partyplanner.controller.annotation.PPRestController;
 import com.redparty.partyplanner.controller.validator.UserCreationValidator;
 import com.redparty.partyplanner.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,8 @@ import java.util.List;
 @RequestMapping("user")
 public class UserController extends BaseController {
 
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
 
@@ -33,6 +37,7 @@ public class UserController extends BaseController {
 
     @RequestMapping("/")
     List<User> getAll() {
+        log.trace("getAll request");
         return userService.findAll();
     }
 

@@ -5,6 +5,8 @@ import com.redparty.partyplanner.common.exception.InvalidRequestException;
 import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.common.exception.helper.FieldErrorResource;
 import com.redparty.partyplanner.common.exception.helper.ObjectErrorResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,19 +28,23 @@ import static com.redparty.partyplanner.common.exception.helper.ObjectErrorResou
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleException(RuntimeException e, WebRequest request) {
+        log.error("INTERNAL_SERVER_ERROR");
         return handleBasicException(e, request, InternalCode.INTERNAL_SERVER_ERROR, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     protected ResponseEntity<Object> handleResourceNotFoundException(RuntimeException e, WebRequest request) {
+        log.error("RESOURCE_NOT_FOUND");
         return handleBasicException(e, request, InternalCode.RESOURCE_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InvalidRequestException.class)
     protected ResponseEntity<Object> handleInvalidRequest(RuntimeException e, WebRequest request) {
-
+        log.error("INVALID_REQUEST");
         return handleBasicException(e, request, InternalCode.INVALID_REQUEST, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 

@@ -22,23 +22,26 @@ server:
     accesslog:
       enabled: true
 
-
 multipart:
   max-file-size: 10Mb
   max-request-size: 10mb
 
-
-
 security:
   basic:
     enabled: false
+
 logging:
   level:
     org:
       springframework:
-        web: debug
-        security: debug
-
+        web: warn
+        security: warn
+        boot:
+          autoconfigure:
+            security: warn
+    com:
+      redparty:
+        partyplanner: error
 
 #debug: true
 
@@ -85,5 +88,9 @@ spring:
 logging:
   level:
     org:
-      hibernate:
-       SQL: info
+      springframework:
+        test: warn
+        jdbc: warn
+      hibernate: warn
+        #SQL: warn
+
