@@ -18,11 +18,37 @@ server:
   port: 9000
   ssl:
     enabled: false
+  tomcat:
+    accesslog:
+      enabled: true
 
 multipart:
   max-file-size: 10Mb
+  max-request-size: 10mb
+
+security:
+  basic:
+    enabled: false
+
+logging:
+  level:
+    org:
+      springframework:
+        web: warn
+        security: warn
+        boot:
+          autoconfigure:
+            security: warn
+    com:
+      redparty:
+        partyplanner: error
+
 #debug: true
----
+
+
+--- ######### for development purpose #########
+
+
 spring:
   profiles: development
   datasource:
@@ -36,7 +62,11 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
----
+
+
+--- ######### for testing purpose #########
+
+
 spring:
   profiles: testing
   datasource:
@@ -44,6 +74,7 @@ spring:
     platform: H2
     username: sa
     continue-on-error: true
+    
   jpa:
     hibernate.ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
@@ -57,5 +88,9 @@ spring:
 logging:
   level:
     org:
-      hibernate:
-       SQL: info
+      springframework:
+        test: warn
+        jdbc: warn
+      hibernate: warn
+        #SQL: warn
+

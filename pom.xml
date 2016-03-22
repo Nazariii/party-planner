@@ -24,7 +24,6 @@
         <java.version>1.8</java.version>
 
         <start-class>com.redparty.partyplanner.Application</start-class>
-        <test.rest-assured>2.8.0</test.rest-assured>
         <lombok.version>1.16.6</lombok.version>
     </properties>
 
@@ -38,7 +37,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
+            <!--for idea only need to be commented-->
+            <!--<scope>provided</scope>-->
         </dependency>
 
         <!-- DB -->
@@ -61,16 +61,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-        <!-- LDAP security -->
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-ldap</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.directory.server</groupId>
-            <artifactId>apacheds-server-jndi</artifactId>
-            <version>1.5.5</version>
-        </dependency>
 
         <!-- Validation -->
         <dependency>
@@ -90,6 +80,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path</artifactId>
             <scope>test</scope>
@@ -99,24 +94,18 @@
             <artifactId>json-path-assert</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--        <dependency>
-                    <groupId>com.jayway.restassured</groupId>
-                    <artifactId>rest-assured</artifactId>
-                    <version>${test.rest-assured}</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>com.jayway.restassured</groupId>
-                    <artifactId>spring-mock-mvc</artifactId>
-                    <version>${test.rest-assured}</version>
-                    <scope>test</scope>
-                </dependency>-->
 
         <!-- Spring Boot Dev tools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
 
         <!-- Lombok -->

@@ -8,10 +8,12 @@ import com.redparty.partyplanner.repository.ServiceRepository;
 import com.redparty.partyplanner.repository.UserRepository;
 import com.redparty.partyplanner.service.ServiceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @org.springframework.stereotype.Service
+@Transactional
 public class ServiceServiceImpl implements ServiceService {
 
     @Autowired

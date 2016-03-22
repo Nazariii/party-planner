@@ -2,6 +2,7 @@ package com.redparty.partyplanner.service.impl;
 
 import com.redparty.partyplanner.IntegrationTestBase;
 import com.redparty.partyplanner.common.domain.Event;
+import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.service.EventService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class EventServiceImplTest extends IntegrationTestBase {
         assertThat("Size after adding", events, allOf(not(empty()), hasSize(++size)));
     }
 
-    @Test
+    @Test(expected = ResourceNotFoundException.class)
     public void delete() throws Exception {
         Event event = eventService.add(NAME, EVENT_STATUS, USER_ID);
         assertThat(event, notNullValue());
