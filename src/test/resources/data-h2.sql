@@ -18,4 +18,4 @@ INSERT INTO `event`
   `user_id`)
 VALUES
   ('CLOSED', 'one', 1),
-  ('CLOSED', 'two', 2);
+  ('CLOSED', 'two', 1);

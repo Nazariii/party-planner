@@ -43,7 +43,7 @@ logging:
 #debug: true
 
 
----
+--- ######### for development purpose #########
 
 
 spring:
@@ -61,7 +61,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
 
----
+--- ######### for testing purpose #########
 
 
 spring:
@@ -71,6 +71,7 @@ spring:
     platform: H2
     username: sa
     continue-on-error: true
+    
   jpa:
     hibernate.ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
