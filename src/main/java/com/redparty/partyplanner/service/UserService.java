@@ -9,11 +9,15 @@ public interface UserService {
 
     User findUserById(Long id);
 
-    User add(User event);
+    User findByEmail(String email);
 
-    User add(String email, String password, String name);
+    User add(User user);
+
+    User add(String email, String password, String name, String phone);
 
     List<User> findAll();
 
     void delete(Long id);
+
+    boolean existsWithEmail(String email);
 }

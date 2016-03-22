@@ -24,6 +24,7 @@
         <java.version>1.8</java.version>
 
         <start-class>com.redparty.partyplanner.Application</start-class>
+        <lombok.version>1.16.6</lombok.version>
     </properties>
 
     <dependencies>
@@ -36,7 +37,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
+            <!--for idea only need to be commented-->
+            <!--<scope>provided</scope>-->
         </dependency>
 
         <!-- DB -->
@@ -54,6 +56,18 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
+        <!-- Spring security -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <!-- Validation -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -65,6 +79,21 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path-assert</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Spring Boot Dev tools -->
         <dependency>
@@ -73,14 +102,19 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.6</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
-
 
     </dependencies>
 
