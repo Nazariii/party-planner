@@ -1,3 +1,4 @@
+[![Build Status](https://drone.io/github.com/Nazariii/party-planner/status.png)](https://drone.io/github.com/Nazariii/party-planner/latest)
 #Party planner
 
 ##Rest platform for easy organisation of parties

@@ -84,7 +84,7 @@ spring:
         format-sql: true
   h2:
     console:
-      enabled: true
+      enabled: false
 logging:
   level:
     org:
