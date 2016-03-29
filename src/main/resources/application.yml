@@ -34,11 +34,11 @@ logging:
   level:
     org:
       springframework:
-        web: warn
-        security: warn
+        web: debug
+        security: debug
         boot:
           autoconfigure:
-            security: warn
+            security: debug
     com:
       redparty:
         partyplanner: error
@@ -74,7 +74,6 @@ spring:
     platform: H2
     username: sa
     continue-on-error: true
-    
   jpa:
     hibernate.ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
@@ -84,13 +83,13 @@ spring:
         format-sql: true
   h2:
     console:
-      enabled: false
+      enabled: true
 logging:
   level:
     org:
       springframework:
-        test: warn
-        jdbc: warn
-      hibernate: warn
+        test: debug
+        jdbc: debug
+      hibernate: debug
         #SQL: warn
 
