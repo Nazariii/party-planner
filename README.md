@@ -1,4 +1,7 @@
-[![Build Status](https://drone.io/github.com/Nazariii/party-planner/status.png)](https://drone.io/github.com/Nazariii/party-planner/latest)
+[![Build Status](https://drone.io/github.com/Nazariii/party-planner/status.png)](https://drone.io/github.com/Nazariii/party-planner/latest) [![Build Status](https://travis-ci.org/Nazariii/party-planner.svg?branch=master)](https://travis-ci.org/Nazariii/party-planner) [ ![Codeship Status for Nazariii/party-planner](https://codeship.com/projects/4e2bbd20-d887-0133-f6c8-5e1dcb628de7/status?branch=master)](https://codeship.com/projects/143232)
+
+[![Dependency Status](https://www.versioneye.com/user/projects/56fbb5b135630e0034fda67f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56fbb5b135630e0034fda67f)
+
 #Party planner
 
 ##Rest platform for easy organisation of parties

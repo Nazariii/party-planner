@@ -89,7 +89,7 @@ logging:
     org:
       springframework:
         test: warn
-        jdbc: debug
+        jdbc: warn
       hibernate: warn
         #SQL: warn
 

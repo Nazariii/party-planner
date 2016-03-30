@@ -1,2 +1,20 @@
 language: java
 jdk: oraclejdk8
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "lpyjqEpHRr+1nZplmB3DQWwTOcf41n5IYSo7Q7HwfvTnzUazpsC1LBMI5ASNwD4u/spaIKvQIgdQgY7R7rOiz6M4EX2R7uOptUrnViiry2MajMYDPBdf1yFJ3JStGDOVUsbsIT8SQd74J3ec9XsrGNcnqPpsj7N6HnoJe/vaV5uzvAjmycaZUu4TWdZvMRDjkcPvbzgoz7o2GBmNlbcr+P/h/5iMIyvetvkdt6f/5DpL3WKt3PlgdcNokuK1KZP4lTx3zBGdzZ02eaJy1/Rtj0RFJsLb14YnNdRJw1Ji7uhzMvj2sB6dYw3z8BQYpj3skktlYQKWHprOhIr+Gxp/paDwZsapL+e+0rNWOXQFEYLteVUKhtaivF9WKIS5/866auzDhZkjgVe5nqw1K4RmuXXhHCeZxW03OG7A6QOGcj+2uYionsBZScNlPAQkIIsNwfOj8y9ZqyjD+5aIndB1i+f1kW65NIWATt4Mm+gcN0IJisVLIaySOh+rUWcSxnoSa5SCxpbR8fQ8Y1AAJaQMRryWWp1UD+MY5Ey3ltLsU+hUjq96D99GdG8LHb4jXhwixwi5Tr+TPKP4orIPlJexTZS131S48IQQXWE3uaaIakG4cUJlVagAAOSkEaH5Pm7ZYsDvhsb65pK1Dmi5crHzw9ygiQn3E+qxoOfwJSP9yD4="
+
+addons:
+  coverity_scan:
+    project:
+      name: "Nazariii/party-planner"
+      description: "Build submitted via Travis CI"
+    notification_email: nazarii.ivashkiv@gmail.com
+    build_command_prepend: "mvn clean"
+    build_command:   "mvn -DskipTests=true compile"
+    branch_pattern: master
