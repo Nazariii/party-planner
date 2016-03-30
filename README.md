@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/Nazariii/party-planner.png?label=ready&title=Ready)](https://waffle.io/Nazariii/party-planner)
 [![Build Status](https://drone.io/github.com/Nazariii/party-planner/status.png)](https://drone.io/github.com/Nazariii/party-planner/latest)
 #Party planner
 
