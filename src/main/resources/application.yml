@@ -34,11 +34,11 @@ logging:
   level:
     org:
       springframework:
-        web: info
-        security: info
+        web: warn
+        security: warn
         boot:
           autoconfigure:
-            security: info
+            security: warn
     com:
       redparty:
         partyplanner: error
@@ -71,7 +71,7 @@ spring:
   profiles: testing
   datasource:
     url: jdbc:h2:mem:testDB;Mode=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    platform: H2
+    platform: h2
     username: sa
     continue-on-error: true
   jpa:
@@ -88,8 +88,8 @@ logging:
   level:
     org:
       springframework:
-        test: info
+        test: warn
         jdbc: debug
-      hibernate: info
+      hibernate: warn
         #SQL: warn
 
