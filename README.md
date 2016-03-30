@@ -4,6 +4,8 @@
 
 #Party planner
 
+[![Join the chat at https://gitter.im/Nazariii/party-planner](https://badges.gitter.im/Nazariii/party-planner.svg)](https://gitter.im/Nazariii/party-planner?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ##Rest platform for easy organisation of parties
 
 This is test project
