@@ -74,6 +74,7 @@ spring:
     platform: h2
     username: sa
     continue-on-error: true
+    driverClassName: org.h2.Driver
   jpa:
     hibernate.ddl-auto: create-drop
     database-platform: org.hibernate.dialect.H2Dialect
@@ -83,7 +84,7 @@ spring:
         format-sql: true
   h2:
     console:
-      enabled: true
+      enabled: false
 logging:
   level:
     org:
