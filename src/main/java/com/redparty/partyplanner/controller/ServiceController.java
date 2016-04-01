@@ -40,7 +40,7 @@ public class ServiceController extends BaseController {
     Service getById(@PathVariable("serviceId") Long serviceId) {
         return serviceService.findServiceById(serviceId);
     }
-    
+
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Service> save(@Valid @RequestBody ServiceDTO service, BindingResult bindingResult, UriComponentsBuilder builder) {
 
