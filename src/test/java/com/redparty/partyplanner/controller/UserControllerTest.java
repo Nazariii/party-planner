@@ -3,9 +3,11 @@ package com.redparty.partyplanner.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redparty.partyplanner.RESTIntegrationTestBase;
 import com.redparty.partyplanner.common.domain.dto.UserCreationDTO;
+import com.redparty.partyplanner.controller.constant.PPURLPath;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -15,6 +17,7 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,12 +53,13 @@ public class UserControllerTest extends RESTIntegrationTestBase<UserController> 
                 "12345678", "s");
         String json = mapper.writeValueAsString(user);
 
-        mockMvc.perform(post(BASE + "add")
+        mockMvc.perform(post(BASE)
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)
                     .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated())
+                .andExpect(header().string(HttpHeaders.LOCATION, containsString(PPURLPath.USER_BASE_URL)));
     }
 
     @Test
@@ -68,7 +72,7 @@ public class UserControllerTest extends RESTIntegrationTestBase<UserController> 
                 "12345678", "s");
         String json = mapper.writeValueAsString(user);
 
-        MockHttpServletResponse result = mockMvc.perform(post(BASE + "add")
+        MockHttpServletResponse result = mockMvc.perform(post(BASE)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)
                     .accept(MediaType.APPLICATION_JSON))
@@ -88,7 +92,7 @@ public class UserControllerTest extends RESTIntegrationTestBase<UserController> 
                 "12345678", "s");
         String json = mapper.writeValueAsString(user);
 
-        mockMvc.perform(post(BASE + "add")
+        mockMvc.perform(post(BASE)
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)

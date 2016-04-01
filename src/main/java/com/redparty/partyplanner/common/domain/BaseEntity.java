@@ -13,7 +13,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
-abstract class BaseEntity implements Serializable{
+public abstract class BaseEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

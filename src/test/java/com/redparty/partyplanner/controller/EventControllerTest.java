@@ -86,7 +86,7 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)
                     .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(NAME)))
                 .andExpect(jsonPath("$.eventStatus", is(EVENT_STATUS)));
     }
@@ -104,8 +104,7 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)
                     .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(NAME)))
                 .andExpect(jsonPath("$.eventStatus", is("HIDDEN")));
     }

@@ -6,16 +6,19 @@ import com.redparty.partyplanner.common.domain.dto.EventDTO;
 import com.redparty.partyplanner.common.exception.InvalidRequestException;
 import com.redparty.partyplanner.controller.annotation.PPRestController;
 import com.redparty.partyplanner.controller.constant.PPURLPath;
+import com.redparty.partyplanner.controller.util.ResponseHelper;
 import com.redparty.partyplanner.service.EventService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -29,7 +32,7 @@ public class EventController extends BaseController {
     @Autowired
     private EventService eventService;
 
-    @RequestMapping( method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     List<Event> getAll() {
         return eventService.findAll();
     }
@@ -40,7 +43,7 @@ public class EventController extends BaseController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    Event saveEvent(@Valid @RequestBody EventDTO event, BindingResult bindingResult) {
+    ResponseEntity<Event> saveEvent(@Valid @RequestBody EventDTO event, BindingResult bindingResult, UriComponentsBuilder builder) {
         if (bindingResult.hasErrors()) {
             throw new InvalidRequestException("Invalid Event", bindingResult);
         }
@@ -55,7 +58,9 @@ public class EventController extends BaseController {
             }
         }
 
-        return eventService.add(event.getName(), eventStatus, Long.valueOf(event.getUserId()));
+        Event newEvent = eventService.add(event.getName(), eventStatus, Long.valueOf(event.getUserId()));
+        return ResponseHelper.buildCreatedResponce(newEvent, builder, PPURLPath.USER_BASE_URL);
+
     }
 
     @RequestMapping(value = "/{eventId}", method = RequestMethod.DELETE)
