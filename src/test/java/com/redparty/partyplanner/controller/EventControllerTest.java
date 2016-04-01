@@ -81,7 +81,7 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(event);
 
-        mockMvc.perform(post(BASE + "add")
+        mockMvc.perform(post(BASE)
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)
@@ -99,11 +99,12 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(event);
 
-        mockMvc.perform(post(BASE + "add")
+        mockMvc.perform(post(BASE )
                     .with(csrf())
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(json)
                     .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name", is(NAME)))
                 .andExpect(jsonPath("$.eventStatus", is("HIDDEN")));

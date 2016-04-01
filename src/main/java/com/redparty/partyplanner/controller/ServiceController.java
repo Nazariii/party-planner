@@ -1,24 +1,32 @@
 package com.redparty.partyplanner.controller;
 
 import com.redparty.partyplanner.common.domain.Service;
+import com.redparty.partyplanner.common.domain.dto.ServiceDTO;
 import com.redparty.partyplanner.controller.annotation.PPRestController;
+import com.redparty.partyplanner.controller.constant.PPURLPath;
 import com.redparty.partyplanner.service.ServiceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @PPRestController
-@RequestMapping("service")
+@RequestMapping(PPURLPath.SERVICE_BASE_URL)
 public class ServiceController extends BaseController {
+
+    private static final Logger log = LoggerFactory.getLogger(EventController.class);
 
     @Autowired
     private ServiceService serviceService;
 
-    @RequestMapping("/")
+    @RequestMapping(method = RequestMethod.GET)
     List<Service> getAll() {
         return serviceService.findAll();
     }
@@ -28,9 +36,10 @@ public class ServiceController extends BaseController {
         return serviceService.findServiceById(serviceId);
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    Service save(@RequestBody Service service) {
-        return serviceService.add(service);
+    //todo validation
+    @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    Service save(@Valid @RequestBody ServiceDTO service) {
+        return serviceService.add(service.getName(), Long.valueOf(service.getUserId()));
     }
 
     @RequestMapping(value = "/{serviceId}", method = RequestMethod.DELETE)
