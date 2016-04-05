@@ -1,0 +1,18 @@
+<ehcache >
+    <cache name="partyPlanner"
+           maxEntriesLocalHeap="200"
+           timeToLiveSeconds="600">
+    </cache>
+    <cache name="eventCache"
+           maxEntriesLocalHeap="200"
+           timeToLiveSeconds="600">
+    </cache>
+    <cache name="serviceCache"
+           maxEntriesLocalHeap="200"
+           timeToLiveSeconds="600">
+    </cache>
+    <cache name="userCache"
+           maxEntriesLocalHeap="200"
+           timeToLiveSeconds="600">
+    </cache>
+</ehcache>
