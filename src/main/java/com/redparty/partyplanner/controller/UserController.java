@@ -58,7 +58,7 @@ public class UserController extends BaseController {
         }
         User newUser = userService.add(user.getEmail(), user.getPassword(), user.getName(), user.getPhone());
 
-        return ResponseHelper.buildCreatedResponce(newUser, builder, PPURLPath.USER_BASE_URL);
+        return ResponseHelper.buildCreatedResponse(newUser, builder, PPURLPath.USER_BASE_URL);
     }
 
     @RequestMapping(value = "/{userId}", method = DELETE)
