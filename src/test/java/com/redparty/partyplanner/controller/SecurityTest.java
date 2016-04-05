@@ -41,6 +41,7 @@ public class SecurityTest extends RESTIntegrationTestBase<UserController> {
         mockMvc
                 .perform(get("/user/")
                         .with(httpBasic(userNameWrong, userPasswordWrong)))
+                //.andDo(print())
                 .andExpect(status().isUnauthorized())
                 .andExpect(unauthenticated());
     }

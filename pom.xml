@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
 
-        <start-class>com.redparty.partyplanner.Application</start-class>
+        <start-class>com.redparty.partyplanner.PartyPlannerApp</start-class>
         <lombok.version>1.16.8</lombok.version>
     </properties>
 

@@ -10,18 +10,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Arrays;
-
 @SpringBootApplication
-public class Application {
+public class PartyPlannerApp {
 
-    private static final Logger log = LoggerFactory.getLogger(Application.class);
+    private static final Logger log = LoggerFactory.getLogger(PartyPlannerApp.class);
 
     public static void main(String[] args) {
 
         log.debug("+++++++++++++++++++++++++++ SPRING BOOT ++++++++++++++++++++++++++++++++");
 
-        ApplicationContext ctx = SpringApplication.run(Application.class, args);
+        ApplicationContext ctx = SpringApplication.run(PartyPlannerApp.class, args);
     }
 
     @Bean

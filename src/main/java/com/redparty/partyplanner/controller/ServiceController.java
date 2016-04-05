@@ -48,7 +48,7 @@ public class ServiceController extends BaseController {
             throw new InvalidRequestException("Invalid Service", bindingResult);
         }
         Service newService = serviceService.add(service.getName(), Long.valueOf(service.getUserId()));
-        return ResponseHelper.buildCreatedResponce(newService, builder, PPURLPath.USER_BASE_URL);
+        return ResponseHelper.buildCreatedResponse(newService, builder, PPURLPath.USER_BASE_URL);
 
     }
 

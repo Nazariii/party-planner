@@ -22,7 +22,7 @@ public class ResponseHelper {
      * @param <T>         response object type should be of BaseEntity type
      * @return response entity
      */
-    public static <T extends BaseEntity> ResponseEntity<T> buildCreatedResponce(T response, UriComponentsBuilder builder, String... pathSegment) {
+    public static <T extends BaseEntity> ResponseEntity<T> buildCreatedResponse(T response, UriComponentsBuilder builder, String... pathSegment) {
 
         HttpHeaders headers = new HttpHeaders();
         URI locationUri =
@@ -31,7 +31,7 @@ public class ResponseHelper {
                         .build()
                         .toUri();
         headers.setLocation(locationUri);
-        return new ResponseEntity<T>(
+        return new ResponseEntity<>(
                 response, headers, HttpStatus.CREATED);
     }
 }

@@ -59,7 +59,7 @@ public class EventController extends BaseController {
         }
 
         Event newEvent = eventService.add(event.getName(), eventStatus, Long.valueOf(event.getUserId()));
-        return ResponseHelper.buildCreatedResponce(newEvent, builder, PPURLPath.USER_BASE_URL);
+        return ResponseHelper.buildCreatedResponse(newEvent, builder, PPURLPath.USER_BASE_URL);
 
     }
 
