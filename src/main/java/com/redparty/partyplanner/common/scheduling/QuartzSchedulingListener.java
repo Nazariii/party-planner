@@ -1,25 +1,25 @@
 package com.redparty.partyplanner.common.scheduling;
 
 import com.redparty.partyplanner.common.scheduling.annotation.CronTriggeredJob;
-import com.redparty.partyplanner.common.scheduling.annotation.SimpleTriggeredJob;
 import com.redparty.partyplanner.common.scheduling.annotation.QuartzService;
-import org.quartz.CronScheduleBuilder;
-import org.quartz.CronTrigger;
+import com.redparty.partyplanner.common.scheduling.annotation.SimpleTriggeredJob;
 import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-
+import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 
 import java.text.ParseException;
 import java.util.*;
 
-import static org.springframework.util.ReflectionUtils.*;
+import static org.springframework.util.ReflectionUtils.doWithMethods;
 
+/**
+ * Spring application listener for registering scheduled methods in spring context
+ */
 public class QuartzSchedulingListener implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
@@ -27,7 +27,7 @@ public class QuartzSchedulingListener implements ApplicationListener<ContextRefr
 
         try {
             ApplicationContext applicationContext = contextRefreshedEvent.getApplicationContext();
-            List<CronTrigger> cronTriggers = loadCronTriggerBeans(applicationContext);
+            List<Trigger> cronTriggers = loadTriggerBeans(applicationContext);
             if (!cronTriggers.isEmpty()) {
                 SchedulerFactoryBean schedulerFactoryBean = applicationContext.getBean(SchedulerFactoryBean.class, cronTriggers);
                 schedulerFactoryBean.start();
@@ -37,10 +37,17 @@ public class QuartzSchedulingListener implements ApplicationListener<ContextRefr
         }
     }
 
-    private List<CronTrigger> loadCronTriggerBeans(ApplicationContext context) {
+    /**
+     * Loads all quartz triggers from spring application context by
+     * {@link QuartzService @QuartzService}, {@link CronTriggeredJob @CronTriggeredJob} and {@link SimpleTriggeredJob @SimpleTriggeredJob} annotations
+     *
+     * @param context spring appication context
+     * @return list of quartz triggers
+     */
+    private List<Trigger> loadTriggerBeans(ApplicationContext context) {
         Map<String, Object> quartzServiceBeans = context.getBeansWithAnnotation(QuartzService.class);
         Set<String> beanNames = quartzServiceBeans.keySet();
-        List<CronTrigger> cronTriggers = new ArrayList<>();
+        List<Trigger> cronTriggers = new ArrayList<>();
 
         for (String beanName : beanNames) {
             Object bean = quartzServiceBeans.get(beanName);
@@ -49,53 +56,86 @@ public class QuartzSchedulingListener implements ApplicationListener<ContextRefr
 
                 if (method.isAnnotationPresent(CronTriggeredJob.class)) {
                     CronTriggeredJob cronTriggerJob = method.getAnnotation(CronTriggeredJob.class);
-                    cronTriggerJob.annotationType().isAnnotationPresent(SimpleTriggeredJob.class);
-                    MethodInvokingJobDetailFactoryBean detailFactoryBean = new MethodInvokingJobDetailFactoryBean();
-                    detailFactoryBean.setName(String.format("%s.%s.%s", beanName, cronTriggerJob.name(), method.getName()));
-                    detailFactoryBean.setTargetMethod(method.getName());
-                    detailFactoryBean.setTargetObject(bean);
-                   // detailFactoryBean.
+
+                    Optional<MethodInvokingJobDetailFactoryBean> detailFactoryBean = Optional.empty();
+                    Optional<CronTriggerFactoryBean> triggerFactoryBean = Optional.empty();
 
                     try {
-                        detailFactoryBean.afterPropertiesSet();
-                    } catch (ClassNotFoundException | NoSuchMethodException e) {
+                        detailFactoryBean = Optional.of(createJobDetailFactoryBean(bean, beanName, cronTriggerJob.name(), method.getName()));
+                        triggerFactoryBean = Optional.of(createCronTriggerFactoryBean(detailFactoryBean.get(), cronTriggerJob, beanName, method.getName()));
+
+                    } catch (ClassNotFoundException | NoSuchMethodException | ParseException e) {
                         e.printStackTrace();
                     }
 
-                    CronTriggerFactoryBean triggerFactoryBean = new CronTriggerFactoryBean();
-                    triggerFactoryBean.setJobDetail(detailFactoryBean.getObject());
-                    triggerFactoryBean.setName(String.format("%s_trigger_%s", beanName, method.getName()));
-                    triggerFactoryBean.setCronExpression(cronTriggerJob.cronExp());
-                    GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone(cronTriggerJob.timeZone()));
-                    System.out.println(calendar.getTime());
+                    cronTriggers.add(triggerFactoryBean.get().getObject());
+                }
 
-                    triggerFactoryBean.setStartTime(calendar.getTime());
-                    triggerFactoryBean.setTimeZone(calendar.getTimeZone());
+                if (method.isAnnotationPresent(SimpleTriggeredJob.class)) {
+                    SimpleTriggeredJob simpleTriggerJob = method.getAnnotation(SimpleTriggeredJob.class);
+
+                    Optional<MethodInvokingJobDetailFactoryBean> detailFactoryBean = Optional.empty();
+                    Optional<SimpleTriggerFactoryBean> triggerFactoryBean = Optional.empty();
 
                     try {
-                        triggerFactoryBean.afterPropertiesSet();
+                        detailFactoryBean = Optional.of(createJobDetailFactoryBean(bean, beanName, simpleTriggerJob.name(), method.getName()));
+                        triggerFactoryBean = Optional.of(createSimpleTriggerFactoryBean(detailFactoryBean.get(), simpleTriggerJob, beanName, method.getName()));
 
-                    } catch (ParseException e) {
+                    } catch (ClassNotFoundException | NoSuchMethodException | ParseException e) {
                         e.printStackTrace();
                     }
 
-                    cronTriggers.add(triggerFactoryBean.getObject());
+                    cronTriggers.add(triggerFactoryBean.get().getObject());
                 }
             });
         }
         return cronTriggers;
     }
 
-    public Trigger getCronTrigger(String cronExpression){
-        CronScheduleBuilder cronScheduleBuilder=null;
-        Trigger cronTrigger=null;
-        cronScheduleBuilder=CronScheduleBuilder.cronSchedule(cronExpression);
-        cronScheduleBuilder.withMisfireHandlingInstructionFireAndProceed();
-        TriggerBuilder<Trigger> cronTtriggerBuilder=TriggerBuilder.newTrigger();
-        cronTtriggerBuilder.withSchedule(cronScheduleBuilder);
-        cronTrigger=cronTtriggerBuilder.build();
+    private MethodInvokingJobDetailFactoryBean createJobDetailFactoryBean(Object bean, String beanName, String jobName, String methodName)
+            throws NoSuchMethodException, ClassNotFoundException {
 
-        return cronTrigger;
+        MethodInvokingJobDetailFactoryBean detailFactoryBean = new MethodInvokingJobDetailFactoryBean();
+        detailFactoryBean.setName(String.format("%s.%s.%s", beanName, jobName, methodName));
+        detailFactoryBean.setTargetMethod(methodName);
+        detailFactoryBean.setTargetObject(bean);
+        detailFactoryBean.afterPropertiesSet();
+        return detailFactoryBean;
     }
 
+    private CronTriggerFactoryBean createCronTriggerFactoryBean(MethodInvokingJobDetailFactoryBean detailFactoryBean,
+                                                                CronTriggeredJob cronTriggeredJob, String beanName, String methodName)
+            throws ParseException {
+
+        CronTriggerFactoryBean triggerFactoryBean = new CronTriggerFactoryBean();
+        triggerFactoryBean.setJobDetail(detailFactoryBean.getObject());
+        triggerFactoryBean.setName(String.format("%s_trigger_%s", beanName, methodName));
+        triggerFactoryBean.setCronExpression(cronTriggeredJob.cronExp());
+        GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone(cronTriggeredJob.timeZone()));
+        System.out.println(calendar.getTime());
+
+        triggerFactoryBean.setStartTime(calendar.getTime());
+        triggerFactoryBean.setTimeZone(calendar.getTimeZone());
+        triggerFactoryBean.setGroup(cronTriggeredJob.group());
+
+        triggerFactoryBean.afterPropertiesSet();
+        return triggerFactoryBean;
+    }
+
+    private SimpleTriggerFactoryBean createSimpleTriggerFactoryBean(MethodInvokingJobDetailFactoryBean detailFactoryBean,
+                                                                    SimpleTriggeredJob simpleTriggeredJob, String beanName, String methodName)
+            throws ParseException {
+
+        SimpleTriggerFactoryBean triggerFactoryBean = new SimpleTriggerFactoryBean();
+        triggerFactoryBean.setJobDetail(detailFactoryBean.getObject());
+        triggerFactoryBean.setName(String.format("%s_trigger_%s", beanName, methodName));
+        triggerFactoryBean.setRepeatCount(simpleTriggeredJob.repeatCount());
+        triggerFactoryBean.setRepeatInterval(simpleTriggeredJob.repeatInterval());
+        triggerFactoryBean.setStartDelay(simpleTriggeredJob.startDelay());
+        triggerFactoryBean.setPriority(simpleTriggeredJob.priority());
+        triggerFactoryBean.setGroup(simpleTriggeredJob.group());
+
+        triggerFactoryBean.afterPropertiesSet();
+        return triggerFactoryBean;
+    }
 }

@@ -2,7 +2,6 @@ package com.redparty.partyplanner;
 
 
 import com.redparty.partyplanner.common.scheduling.QuartzSchedulingListener;
-import org.quartz.CronTrigger;
 import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +9,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,7 +26,7 @@ public class PartyPlannerApp {
 
         log.debug("+++++++++++++++++++++++++++ SPRING BOOT ++++++++++++++++++++++++++++++++");
 
-        ApplicationContext ctx = SpringApplication.run(PartyPlannerApp.class, args);
+        SpringApplication.run(PartyPlannerApp.class, args);
     }
 
     @Bean
@@ -35,17 +35,19 @@ public class PartyPlannerApp {
     }
 
     @Bean
-    public QuartzSchedulingListener quartJobSchedulingListener(){
+    @Profile("Scheduling")
+    public QuartzSchedulingListener quartzJobSchedulingListener(){
         return new QuartzSchedulingListener();
     }
 
-    @Bean//(name="scheduler")
+    @Bean
     @Scope(value="prototype")
-    public SchedulerFactoryBean schedulerFactoryBean(List<CronTrigger> triggerFactoryBeans) {
+    @Profile("Scheduling")
+    public SchedulerFactoryBean schedulerFactoryBean(List<Trigger> triggerFactoryBeans) {
         SchedulerFactoryBean scheduler = new SchedulerFactoryBean();
-        CronTrigger[] cronTriggers = new CronTrigger[triggerFactoryBeans.size()];
-        cronTriggers = triggerFactoryBeans.toArray(cronTriggers);
-        scheduler.setTriggers((Trigger[]) cronTriggers);
+        Trigger[] triggers = new Trigger[triggerFactoryBeans.size()];
+        triggers = triggerFactoryBeans.toArray(triggers);
+        scheduler.setTriggers((Trigger[]) triggers);
         return scheduler;
     }
 }
