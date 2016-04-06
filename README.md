@@ -8,7 +8,7 @@
 
 ##Rest platform for easy organisation of parties
 
-This is test project
+_This is test project_
 
 ###Technologies:
 
@@ -19,6 +19,7 @@ This is test project
 - Spring Security 4.0.3 / ( CORS, CSRF) / LDAP Auth
 - MySQL/ H2
 - Spring MVC
+- Spring + Quartz 2.2 / EhCache
 - Spring Testing/ JUnit 4/ Hamcrest/ JSON path
 - YAML/ Lombok
 - SLF4J
