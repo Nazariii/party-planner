@@ -30,7 +30,7 @@ public class EventUnitId implements Serializable {
         this.service = service;
     }
 
-    @Override
+   /* @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -42,5 +42,5 @@ public class EventUnitId implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(event, service);
-    }
+    }*/
 }

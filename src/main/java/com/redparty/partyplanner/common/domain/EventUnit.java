@@ -1,7 +1,6 @@
 package com.redparty.partyplanner.common.domain;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "EVENT_UNIT")
@@ -51,7 +50,7 @@ public class EventUnit {
         this.serviceStatus = serviceStatus;
     }
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -62,5 +61,5 @@ public class EventUnit {
     @Override
     public int hashCode() {
         return Objects.hash(pk);
-    }
+    }*/
 }

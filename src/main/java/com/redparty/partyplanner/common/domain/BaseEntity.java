@@ -10,7 +10,6 @@ import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 @Getter
-@EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable{
