@@ -31,7 +31,7 @@ public class Service extends BaseEntity {
     @OneToMany(mappedBy = "pk.service", fetch = FetchType.LAZY)
     private Set<EventUnit> eventUnit = new HashSet<>();
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -42,5 +42,5 @@ public class Service extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
-    }
+    }*/
 }

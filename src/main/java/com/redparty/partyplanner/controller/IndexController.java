@@ -1,11 +1,11 @@
 package com.redparty.partyplanner.controller;
 
 import com.redparty.partyplanner.controller.annotation.PPRestController;
-import com.redparty.partyplanner.controller.constant.PPURLPath;
+import com.redparty.partyplanner.controller.constant.WebConstant;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @PPRestController
-@RequestMapping(PPURLPath.BASE_URL)
+@RequestMapping(WebConstant.BASE_URL)
 public class IndexController extends BaseController {
 
     public String index() {

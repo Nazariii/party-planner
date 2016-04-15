@@ -4,7 +4,7 @@ import com.redparty.partyplanner.common.domain.Service;
 import com.redparty.partyplanner.common.domain.dto.ServiceDTO;
 import com.redparty.partyplanner.common.exception.InvalidRequestException;
 import com.redparty.partyplanner.controller.annotation.PPRestController;
-import com.redparty.partyplanner.controller.constant.PPURLPath;
+import com.redparty.partyplanner.controller.constant.WebConstant;
 import com.redparty.partyplanner.controller.util.ResponseHelper;
 import com.redparty.partyplanner.service.ServiceService;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @PPRestController
-@RequestMapping(PPURLPath.SERVICE_BASE_URL)
+@RequestMapping(WebConstant.SERVICE_BASE_URL)
 public class ServiceController extends BaseController {
 
     private static final Logger log = LoggerFactory.getLogger(EventController.class);
@@ -48,7 +48,7 @@ public class ServiceController extends BaseController {
             throw new InvalidRequestException("Invalid Service", bindingResult);
         }
         Service newService = serviceService.add(service.getName(), Long.valueOf(service.getUserId()));
-        return ResponseHelper.buildCreatedResponce(newService, builder, PPURLPath.USER_BASE_URL);
+        return ResponseHelper.buildCreatedResponse(newService, builder, WebConstant.USER_BASE_URL);
 
     }
 

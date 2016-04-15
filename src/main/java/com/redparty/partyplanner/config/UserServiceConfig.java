@@ -25,6 +25,7 @@ public class UserServiceConfig implements UserDetailsService {
     }
 
     @Override
+    // todo add not found user exception handling
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByEmail(username);
         return new UserSecurityDTO(user);

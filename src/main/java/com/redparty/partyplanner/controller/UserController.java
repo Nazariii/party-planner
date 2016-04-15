@@ -4,7 +4,7 @@ import com.redparty.partyplanner.common.domain.User;
 import com.redparty.partyplanner.common.domain.dto.UserCreationDTO;
 import com.redparty.partyplanner.common.exception.InvalidRequestException;
 import com.redparty.partyplanner.controller.annotation.PPRestController;
-import com.redparty.partyplanner.controller.constant.PPURLPath;
+import com.redparty.partyplanner.controller.constant.WebConstant;
 import com.redparty.partyplanner.controller.util.ResponseHelper;
 import com.redparty.partyplanner.controller.validator.UserCreationValidator;
 import com.redparty.partyplanner.service.UserService;
@@ -24,7 +24,7 @@ import static org.springframework.http.MediaType.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @PPRestController
-@RequestMapping(PPURLPath.USER_BASE_URL)
+@RequestMapping(WebConstant.USER_BASE_URL)
 public class UserController extends BaseController {
 
     private static final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -58,7 +58,7 @@ public class UserController extends BaseController {
         }
         User newUser = userService.add(user.getEmail(), user.getPassword(), user.getName(), user.getPhone());
 
-        return ResponseHelper.buildCreatedResponce(newUser, builder, PPURLPath.USER_BASE_URL);
+        return ResponseHelper.buildCreatedResponse(newUser, builder, WebConstant.USER_BASE_URL);
     }
 
     @RequestMapping(value = "/{userId}", method = DELETE)

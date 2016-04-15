@@ -5,7 +5,7 @@ import com.redparty.partyplanner.common.domain.Event.EventStatus;
 import com.redparty.partyplanner.common.domain.dto.EventDTO;
 import com.redparty.partyplanner.common.exception.InvalidRequestException;
 import com.redparty.partyplanner.controller.annotation.PPRestController;
-import com.redparty.partyplanner.controller.constant.PPURLPath;
+import com.redparty.partyplanner.controller.constant.WebConstant;
 import com.redparty.partyplanner.controller.util.ResponseHelper;
 import com.redparty.partyplanner.service.EventService;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @PPRestController
-@RequestMapping(PPURLPath.EVENT_BASE_URL)
+@RequestMapping(WebConstant.EVENT_BASE_URL)
 public class EventController extends BaseController {
 
     private static final Logger log = LoggerFactory.getLogger(EventController.class);
@@ -59,7 +59,7 @@ public class EventController extends BaseController {
         }
 
         Event newEvent = eventService.add(event.getName(), eventStatus, Long.valueOf(event.getUserId()));
-        return ResponseHelper.buildCreatedResponce(newEvent, builder, PPURLPath.USER_BASE_URL);
+        return ResponseHelper.buildCreatedResponse(newEvent, builder, WebConstant.USER_BASE_URL);
 
     }
 

@@ -3,7 +3,7 @@ package com.redparty.partyplanner.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redparty.partyplanner.RESTIntegrationTestBase;
 import com.redparty.partyplanner.common.domain.dto.UserCreationDTO;
-import com.redparty.partyplanner.controller.constant.PPURLPath;
+import com.redparty.partyplanner.controller.constant.WebConstant;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -59,7 +59,7 @@ public class UserControllerTest extends RESTIntegrationTestBase<UserController> 
                     .content(json)
                     .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
-                .andExpect(header().string(HttpHeaders.LOCATION, containsString(PPURLPath.USER_BASE_URL)));
+                .andExpect(header().string(HttpHeaders.LOCATION, containsString(WebConstant.USER_BASE_URL)));
     }
 
     @Test
