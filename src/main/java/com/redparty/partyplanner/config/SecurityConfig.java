@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -38,6 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
+    private AuthSuccessHandler authSuccessHandler;
+
+    @Autowired
     AuthEntryPoint authEntryPoint;
 
     @Override
@@ -57,11 +61,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
 
                 .and()
-                    .formLogin() // form based auth
+                    .formLogin()
+                        .successHandler(authSuccessHandler)
+                        .failureHandler(new SimpleUrlAuthenticationFailureHandler()) // form based auth
                 .and()
                     .exceptionHandling().authenticationEntryPoint(authEntryPoint) //todo
-                .and()
-                    .httpBasic() //http based auth
+               /* .and()
+                    .httpBasic() //http based auth*/
                 .and()
                     .rememberMe()
                         .tokenValiditySeconds(1000000)
