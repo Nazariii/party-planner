@@ -4,12 +4,13 @@ spring:
   mvc:
     message-codes-resolver:
       format: PREFIX_ERROR_CODE
+    dispatch-options-request: true
   jackson:
     serialization:
       indent_output: true
   devtools:
     restart:
-      enabled: false
+      enabled: true
     livereload:
       enabled: false
 
@@ -41,7 +42,7 @@ logging:
             security: warn
     com:
       redparty:
-        partyplanner: error
+        partyplanner: debug
 
 #debug: true
 
@@ -62,7 +63,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-
+logging:
+  level:
+    org:
+      hibernate: warn
 
 --- ######### for testing purpose #########
 

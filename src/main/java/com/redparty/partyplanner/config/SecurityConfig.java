@@ -54,6 +54,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .formLogin()
+                    .permitAll()
+                    .successHandler(authSuccessHandler)
+                    .failureHandler(new SimpleUrlAuthenticationFailureHandler()) // form based auth
+                .and()
                 .authorizeRequests()
                     .antMatchers(HttpMethod.OPTIONS, "/*/**").permitAll()
                     .antMatchers("/login").permitAll()
@@ -61,10 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
 
                 .and()
-                    .formLogin()
-                        .successHandler(authSuccessHandler)
-                        .failureHandler(new SimpleUrlAuthenticationFailureHandler()) // form based auth
-                .and()
+
                     .exceptionHandling().authenticationEntryPoint(authEntryPoint) //todo
                /* .and()
                     .httpBasic() //http based auth*/
@@ -83,6 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                                     new NegatedRequestMatcher(new AntPathRequestMatcher("/", HttpMethod.OPTIONS.toString())),
                                     new NegatedRequestMatcher(new AntPathRequestMatcher("/login*/**", HttpMethod.OPTIONS.toString())),
+                                    new NegatedRequestMatcher(new AntPathRequestMatcher("/login*/**", HttpMethod.POST.toString())),
                                     new NegatedRequestMatcher(new AntPathRequestMatcher("/logout*/**", HttpMethod.OPTIONS.toString())),
 
                                     new NegatedRequestMatcher(new AntPathRequestMatcher("/**", HttpMethod.GET.toString())),

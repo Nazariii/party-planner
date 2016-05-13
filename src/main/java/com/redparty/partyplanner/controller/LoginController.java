@@ -22,4 +22,9 @@ public class LoginController {
         }
         return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
+
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    public ResponseEntity<User> getLoggedInUser() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
