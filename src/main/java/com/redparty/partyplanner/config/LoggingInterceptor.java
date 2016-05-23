@@ -9,19 +9,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.RequestWrapper;
-import javax.xml.ws.ResponseWrapper;
-import java.io.UnsupportedEncodingException;
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Component
-public class LoggingInterceptor implements HandlerInterceptor {
+class LoggingInterceptor implements HandlerInterceptor {
 
-    protected static final Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(LoggingInterceptor.class);
     private static final String REQUEST_PREFIX = "=== Request: ===";
     private static final String RESPONSE_PREFIX = "Response: ";
 
@@ -101,15 +95,15 @@ public class LoggingInterceptor implements HandlerInterceptor {
         logger.debug(msg.toString());
     }
 
-    private boolean isBinaryContent(final HttpServletRequest request) {
-        if (request.getContentType() == null) {
-            return false;
-        }
-        return request.getContentType().startsWith("image") || request.getContentType().startsWith("video") || request.getContentType().startsWith("audio");
+/*    private boolean isBinaryContent(final HttpServletRequest request) {
+        return request.getContentType() != null
+                && (request.getContentType().startsWith("image")
+                || request.getContentType().startsWith("video")
+                || request.getContentType().startsWith("audio"));
     }
 
     private boolean isMultipart(final HttpServletRequest request) {
         return request.getContentType() != null && request.getContentType().startsWith("multipart/form-data");
-    }
+    }*/
 
 }
