@@ -1,6 +1,5 @@
 package com.redparty.partyplanner.config;
 
-import com.redparty.partyplanner.common.exception.helper.ObjectErrorResource;
 import com.redparty.partyplanner.controller.constant.WebConstant;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

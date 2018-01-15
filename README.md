@@ -13,13 +13,13 @@ _This is test project_
 ###Technologies:
 
 - Java 8
-- Spring Framework 4.2
-- Spring Boot 1.3.2
+- Spring Framework 4.3
+- Spring Boot 1.5.7
 - Spring Data JPA/ Specifications/ Hibernate 4
-- Spring Security 4.0.3 / ( CORS, CSRF) / LDAP Auth
+- Spring Security 4.2.3 / ( CORS, CSRF) / LDAP Auth
 - MySQL/ H2
 - Spring MVC
-- Spring + Quartz 2.2 / EhCache
+- Spring + Quartz 2.3 / EhCache
 - Spring Testing/ JUnit 4/ Hamcrest/ JSON path
 - YAML/ Lombok
 - SLF4J
