@@ -1,21 +1,17 @@
 package com.redparty.partyplanner.config;
 
 import com.redparty.partyplanner.config.csrf.CsrfTokenResponseCookieBindingFilter;
-import com.redparty.partyplanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.encoding.BaseDigestPasswordEncoder;
-import org.springframework.security.authentication.encoding.LdapShaPasswordEncoder;
-import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -38,6 +34,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
+    private AuthSuccessHandler authSuccessHandler;
+
+    @Autowired
     AuthEntryPoint authEntryPoint;
 
     @Override
@@ -50,6 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .formLogin()
+                    .permitAll()
+                    .successHandler(authSuccessHandler)
+                    .failureHandler(new SimpleUrlAuthenticationFailureHandler()) // form based auth
+                .and()
                 .authorizeRequests()
                     .antMatchers(HttpMethod.OPTIONS, "/*/**").permitAll()
                     .antMatchers("/login").permitAll()
@@ -57,8 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .anyRequest().authenticated()
 
                 .and()
-                    .formLogin() // form based auth
-                .and()
+
                     .exceptionHandling().authenticationEntryPoint(authEntryPoint) //todo
                 .and()
                     .httpBasic() //http based auth
@@ -77,6 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                                     new NegatedRequestMatcher(new AntPathRequestMatcher("/", HttpMethod.OPTIONS.toString())),
                                     new NegatedRequestMatcher(new AntPathRequestMatcher("/login*/**", HttpMethod.OPTIONS.toString())),
+                                    new NegatedRequestMatcher(new AntPathRequestMatcher("/login*/**", HttpMethod.POST.toString())),
                                     new NegatedRequestMatcher(new AntPathRequestMatcher("/logout*/**", HttpMethod.OPTIONS.toString())),
 
                                     new NegatedRequestMatcher(new AntPathRequestMatcher("/**", HttpMethod.GET.toString())),

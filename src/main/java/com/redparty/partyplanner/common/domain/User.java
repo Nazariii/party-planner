@@ -13,7 +13,7 @@ import java.util.*;
 @Table(name = "USER")
 @Getter
 @Setter
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     @NotNull
@@ -22,9 +22,6 @@ public class User extends BaseEntity{
     @JsonIgnore
     @Column(nullable = false)
     private String password;
-
-    @Column(name = "auth_token", unique = true, nullable = false)
-    private String authToken;
 
     @Column(name = "creation_date", nullable = false)
     private Date creationDate;
@@ -42,10 +39,6 @@ public class User extends BaseEntity{
     @JsonBackReference
     private Set<Service> services = new HashSet<>();
 
-    public String createAuthToken() {
-        authToken = UUID.randomUUID().toString();
-        return authToken;
-    }
 
     User() {
         this.creationDate = new Date();
@@ -56,7 +49,6 @@ public class User extends BaseEntity{
         this.email = email;
         this.password = password;
         this.name = name;
-        this.authToken = createAuthToken();
         this.phone = phone;
     }
 
@@ -88,7 +80,6 @@ public class User extends BaseEntity{
         return "User{" +
                 "id=" + getId() +
                 ", email='" + email + '\'' +
-                ", authToken='" + authToken + '\'' +
                 ", creationDate=" + creationDate +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
