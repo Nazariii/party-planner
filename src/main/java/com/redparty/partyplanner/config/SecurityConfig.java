@@ -68,8 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                     .exceptionHandling().authenticationEntryPoint(authEntryPoint) //todo
-               /* .and()
-                    .httpBasic() //http based auth*/
+                .and()
+                    .httpBasic() //http based auth
                 .and()
                     .rememberMe()
                         .tokenValiditySeconds(1000000)
