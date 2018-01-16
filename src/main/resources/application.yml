@@ -5,6 +5,9 @@ spring:
     message-codes-resolver:
       format: PREFIX_ERROR_CODE
     dispatch-options-request: true
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
   jackson:
     serialization:
       indent_output: true
@@ -12,7 +15,7 @@ spring:
     restart:
       enabled: true
     livereload:
-      enabled: false
+      enabled: true
 
 server:
   #address: 192.169.1.1

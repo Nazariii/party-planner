@@ -41,6 +41,17 @@
             <!--for idea only need to be commented-->
             <!--<scope>provided</scope>-->
         </dependency>
+        <!-- jsp support-->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- jstl support -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
 
         <!-- DB -->
         <dependency>

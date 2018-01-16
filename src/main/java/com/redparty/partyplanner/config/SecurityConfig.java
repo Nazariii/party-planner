@@ -57,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers(HttpMethod.OPTIONS, "/*/**").permitAll()
                     .antMatchers("/login").permitAll()
+                    .antMatchers("/jsp/**").permitAll()
                     .antMatchers("/").access("permitAll") //SpEL
                     .anyRequest().authenticated()
 
@@ -75,6 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("remember-me")
 
                 .and()
+                    .csrf().ignoringAntMatchers("/jsp/**")
+                .and()
+
                     .csrf().requireCsrfProtectionMatcher(
                             new AndRequestMatcher(
 
