@@ -77,7 +77,7 @@ public class UserControllerTest extends RESTIntegrationTestBase<UserController> 
                 .andReturn()
                     .getResponse();
 
-        assertThat(result.getErrorMessage(), containsString("Could not verify the provided CSRF token because your session was not found."));
+        assertThat(result.getErrorMessage(), containsString("Forbidden"));
     }
 
     @Test

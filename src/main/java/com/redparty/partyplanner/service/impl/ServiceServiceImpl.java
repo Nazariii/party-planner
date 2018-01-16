@@ -24,7 +24,7 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public Service findServiceById(Long id) {
-        return serviceRepository.findOne(id)
+        return serviceRepository.findOneById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Service", "id", id));
     }
 
@@ -36,7 +36,7 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public Service add(String name, Long userId) {
-        User user = userRepository.findOne(userId)
+        User user = userRepository.findOneById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         return add(new Service(name, user));
     }
@@ -48,6 +48,6 @@ public class ServiceServiceImpl implements ServiceService {
 
     @Override
     public void delete(Long id) {
-        serviceRepository.delete(id);
+        serviceRepository.deleteById(id);
     }
 }

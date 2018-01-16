@@ -21,7 +21,7 @@ import javax.sql.DataSource;
 
 @EnableWebSecurity
 @Configuration
-@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@Order(SecurityProperties.BASIC_AUTH_ORDER - 2) //todo workaround due to ACCESS_OVERRIDE_ORDER constant was deleted in Boot 2.0
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired

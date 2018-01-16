@@ -44,7 +44,6 @@ public class EventServiceImplTest extends IntegrationTestBase {
     }
 
     @Test
-    @Ignore("will be enabled as soon as spring fixes a bug")
     public void testCacheWhenFindById() throws Exception {
         Event event = eventService.findEventById(EVENT_ID);
         Event cachedEvent = eventService.findEventById(EVENT_ID);
@@ -64,7 +63,6 @@ public class EventServiceImplTest extends IntegrationTestBase {
     }
 
     @Test
-    @Ignore("will be enabled as soon as spring fixes a bug")
     public void testAddingEventCache() throws Exception {
 
         Event event = eventService.add(NAME, EVENT_STATUS, USER_ID);
