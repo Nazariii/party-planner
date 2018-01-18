@@ -5,7 +5,6 @@ import com.redparty.partyplanner.common.domain.Event;
 import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.config.constant.AppConstant;
 import com.redparty.partyplanner.service.EventService;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;

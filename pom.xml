@@ -25,7 +25,6 @@
 
         <start-class>com.redparty.partyplanner.PartyPlannerApp</start-class>
         <lombok.version>1.16.20</lombok.version>
-        <quartz.version>2.3.0</quartz.version>
     </properties>
 
     <dependencies>
@@ -34,12 +33,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <!--for idea only need to be commented-->
-            <!--<scope>provided</scope>-->
         </dependency>
 
         <!-- DB -->
@@ -51,10 +44,6 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
         <!-- Spring security -->
@@ -77,6 +66,7 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -118,9 +108,8 @@
         </dependency>
 
         <dependency>
-            <groupId>org.quartz-scheduler</groupId>
-            <artifactId>quartz</artifactId>
-            <version>${quartz.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
 
         <!-- Caching (for autoconfig in Boot >= 1.3 ) -->

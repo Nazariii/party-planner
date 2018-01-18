@@ -13,10 +13,10 @@ _This is test project_
 ### Technologies:
 
 - Java 9
-- Spring Framework 4.3
+- Spring Framework 5.0
 - Spring Boot 2.0.0.M7
-- Spring Data JPA/ Specifications/ Hibernate 4
-- Spring Security 4.2.3 / ( CORS, CSRF) / LDAP Auth
+- Spring Data JPA/ Specifications/ Hibernate 5
+- Spring Security 5.0 / ( CORS, CSRF) / LDAP Auth
 - MySQL/ H2
 - Spring MVC
 - Spring + Quartz 2.3 / EhCache
