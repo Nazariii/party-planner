@@ -25,6 +25,15 @@
 
         <start-class>com.redparty.partyplanner.PartyPlannerApp</start-class>
         <lombok.version>1.16.20</lombok.version>
+
+        <junit.version>4.12</junit.version>
+        <!--<junit.jupiter.version>5.0.3</junit.jupiter.version>-->
+        <junit.vintage.version>${junit.version}.3</junit.vintage.version>
+        <junit.platform.version>1.0.2</junit.platform.version>
+
+        <!-- TODO remove once a newer version of surefire (2.21.1+) is compatible with JUnit 5 and used by Spring Boot -->
+        <!-- Reference: https://github.com/junit-team/junit5/issues/809 -->
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
     </properties>
 
     <dependencies>
@@ -79,6 +88,31 @@
             <artifactId>json-path-assert</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- To avoid compiler warnings about @API annotations in JUnit code -->
+        <dependency>
+            <groupId>org.apiguardian</groupId>
+            <artifactId>apiguardian-api</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
+
+
+
+        <!-- Only required to run tests in an IDE that bundles an older version -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+
 
         <!-- Spring Boot Dev tools -->
         <dependency>
@@ -166,37 +200,30 @@
                 <configuration>
                     <argLine>--add-modules java.base</argLine>
                 </configuration>
+                <!-- TODO remove once a newer version of surefire (2.21.1+) is compatible with JUnit 5 and used by Spring Boot -->
+                <!-- Reference: https://github.com/junit-team/junit5/issues/809 -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>${junit.platform.version}</version>
+                    </dependency>
+
+                    <!-- Only required to run tests in an IDE that bundles an older version -->
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>5.0.2</version>
+                    </dependency>
+
+                    <!-- For tests written with JUnit 4-->
+                    <dependency>
+                        <groupId>org.junit.vintage</groupId>
+                        <artifactId>junit-vintage-engine</artifactId>
+                        <version>${junit.vintage.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
-            <!---->
-
-            <!--
-           java 9 module issue see https://github.com/rzwitserloot/lombok/issues/985
-            <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-compiler-plugin</artifactId>
-                 <version>3.7.0</version>
-                 <configuration>
-                     <source>${java.version}</source>
-                     <target>${java.version}</target>
-                     <showDeprecation>true</showDeprecation>
-                     <showWarnings>true</showWarnings>
-                     <fork>true</fork>
-                     <compilerArgs>
-                         <arg>-Werror</arg>
-                         <arg>-Xlint:all</arg>
-                         <arg>-J&#45;&#45;add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
-                         <arg>-J&#45;&#45;add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
-                         <arg>-J&#45;&#45;add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
-                         <arg>-J&#45;&#45;add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
-                         <arg>-J&#45;&#45;add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
-                         <arg>-J&#45;&#45;add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
-                         <arg>-J&#45;&#45;add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
-                         <arg>-J&#45;&#45;add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
-                         <arg>-J&#45;&#45;add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
-                     </compilerArgs>
-                 </configuration>
-             </plugin>-->
-
         </plugins>
     </build>
 
@@ -233,6 +260,4 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
-    <!--   -->
-
 </project>
