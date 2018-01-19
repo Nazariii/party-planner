@@ -32,3 +32,6 @@ _This is test project_
   3. mysql -u root -p
   4. create database party_planner;
 
+### Brunching:
+1. stable - branch with stable dependencies
+2. develop - RC and milestone versions
