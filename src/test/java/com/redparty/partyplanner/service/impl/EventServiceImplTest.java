@@ -5,7 +5,6 @@ import com.redparty.partyplanner.common.domain.Event;
 import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.config.constant.AppConstant;
 import com.redparty.partyplanner.service.EventService;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -44,7 +43,6 @@ public class EventServiceImplTest extends IntegrationTestBase {
     }
 
     @Test
-    @Ignore("will be enabled as soon as spring fixes a bug")
     public void testCacheWhenFindById() throws Exception {
         Event event = eventService.findEventById(EVENT_ID);
         Event cachedEvent = eventService.findEventById(EVENT_ID);
@@ -64,7 +62,6 @@ public class EventServiceImplTest extends IntegrationTestBase {
     }
 
     @Test
-    @Ignore("will be enabled as soon as spring fixes a bug")
     public void testAddingEventCache() throws Exception {
 
         Event event = eventService.add(NAME, EVENT_STATUS, USER_ID);

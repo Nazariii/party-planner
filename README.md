@@ -3,20 +3,20 @@
 
 
 
-#Party planner
+# Party planner
 
 
-##Rest platform for easy organisation of parties
+## Rest platform for easy organisation of parties
 
 _This is test project_
 
-###Technologies:
+### Technologies:
 
-- Java 8
-- Spring Framework 4.3
-- Spring Boot 1.5.7
-- Spring Data JPA/ Specifications/ Hibernate 4
-- Spring Security 4.2.3 / ( CORS, CSRF) / LDAP Auth
+- Java 9
+- Spring Framework 5.0
+- Spring Boot 2.0.0.M7
+- Spring Data JPA/ Specifications/ Hibernate 5
+- Spring Security 5.0 / ( CORS, CSRF) / LDAP Auth
 - MySQL/ H2
 - Spring MVC
 - Spring + Quartz 2.3 / EhCache
@@ -24,7 +24,7 @@ _This is test project_
 - YAML/ Lombok
 - SLF4J
 
-###Pre Reqs:
+### Pre Reqs:
 
 - install MySQL and create _party_planer_ db using docker:
   1. docker run -it -v C:/tempData/mysql:/var/lib/mysql --name  mysql -e MYSQL_ROOT_PASSWORD=root --rm -p 3306:3306  -d mysql:latest

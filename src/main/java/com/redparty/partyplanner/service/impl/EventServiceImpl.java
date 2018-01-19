@@ -25,7 +25,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event findEventById(Long id) throws ResourceNotFoundException {
-        return eventRepository.findOne(id)
+        return eventRepository.findOneById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Event", "id", id));
     }
 
@@ -37,7 +37,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event add(String name, Event.EventStatus eventStatus, Long userId) {
-        User user = userRepository.findOne(userId)
+        User user = userRepository.findOneById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         return add(new Event(name, eventStatus, user));
     }
@@ -49,6 +49,6 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void delete(Long id) {
-        eventRepository.delete(id);
+        eventRepository.deleteById(id);
     }
 }
