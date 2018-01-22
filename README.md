@@ -20,7 +20,7 @@ _This is test project_
 - MySQL/ H2
 - Spring MVC
 - Spring + Quartz 2.3 / EhCache
-- Spring Testing/ JUnit 4/ Hamcrest/ JSON path
+- Spring Testing/ JUnit 5/ Hamcrest/ JSON path
 - YAML/ Lombok
 - SLF4J
 
