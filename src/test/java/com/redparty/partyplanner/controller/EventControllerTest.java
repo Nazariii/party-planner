@@ -5,7 +5,7 @@ import com.redparty.partyplanner.RESTIntegrationTestBase;
 import com.redparty.partyplanner.common.domain.Event;
 import com.redparty.partyplanner.common.domain.dto.EventDTO;
 import com.redparty.partyplanner.service.UserService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -36,7 +36,7 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
                 .andExpect(jsonPath("$[0].name", is(NAME)))
                 .andExpect(jsonPath("$[0].id", is(EVENT_ID)))
                 .andExpect(jsonPath("$[0].eventStatus", is(EVENT_STATUS)));
-                //.andDo(print());
+        //.andDo(print());
     }
 
     @Test
@@ -67,10 +67,10 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
         String json = mapper.writeValueAsString(event);
 
         mockMvc.perform(post(BASE)
-                    .with(csrf())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(json)
-                    .accept(MediaType.APPLICATION_JSON))
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(NAME)))
                 .andExpect(jsonPath("$.eventStatus", is(EVENT_STATUS)));
@@ -84,11 +84,11 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(event);
 
-        mockMvc.perform(post(BASE )
-                    .with(csrf())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(json)
-                    .accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post(BASE)
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(NAME)))
                 .andExpect(jsonPath("$.eventStatus", is("HIDDEN")));

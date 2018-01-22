@@ -24,9 +24,6 @@ public class PartyPlannerApp {
     private static final Logger log = LoggerFactory.getLogger(PartyPlannerApp.class);
 
     public static void main(String[] args) {
-
-        log.debug("+++++++++++++++++++++++++++ SPRING BOOT ++++++++++++++++++++++++++++++++");
-
         SpringApplication.run(PartyPlannerApp.class, args);
     }
 

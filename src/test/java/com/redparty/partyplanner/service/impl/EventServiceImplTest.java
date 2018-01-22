@@ -1,13 +1,18 @@
 package com.redparty.partyplanner.service.impl;
 
-import com.redparty.partyplanner.IntegrationTestBase;
 import com.redparty.partyplanner.common.domain.Event;
 import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.config.constant.AppConstant;
 import com.redparty.partyplanner.service.EventService;
-import org.junit.Test;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cache.CacheManager;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
@@ -19,8 +24,12 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class EventServiceImplTest extends IntegrationTestBase {
+@SpringBootTest
+@ActiveProfiles("testing")
+@ExtendWith(SpringExtension.class)
+public class EventServiceImplTest {
 
     @Autowired
     private EventService eventService;
@@ -80,14 +89,15 @@ public class EventServiceImplTest extends IntegrationTestBase {
         assertThat("Size after adding", events, allOf(not(empty()), hasSize(++size)));
     }
 
-    @Test(expected = ResourceNotFoundException.class)
+    @Test
     public void delete() throws Exception {
         Event event = eventService.add(NAME, EVENT_STATUS, USER_ID);
         assertThat(event, notNullValue());
         Long eventId = event.getId();
 
         eventService.delete(eventId);
-        assertThat("Event has been deleted", eventService.findEventById(eventId), nullValue());
+        Throwable exception = assertThrows(ResourceNotFoundException.class, () -> eventService.findEventById(eventId));
+        MatcherAssert.assertThat(exception.getMessage(), Matchers.is("Resource 'Event' with 'id' = '" + eventId + "' was not found"));
     }
 
     @Test

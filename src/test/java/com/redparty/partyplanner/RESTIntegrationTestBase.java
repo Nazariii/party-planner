@@ -1,16 +1,21 @@
 package com.redparty.partyplanner;
 
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@WebAppConfiguration
-public abstract class RESTIntegrationTestBase<T> extends IntegrationTestBase {
+@ActiveProfiles("testing")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+public abstract class RESTIntegrationTestBase<T> {
 
     protected MockMvc mockMvc;
 
@@ -20,7 +25,7 @@ public abstract class RESTIntegrationTestBase<T> extends IntegrationTestBase {
     @Autowired(required = false)
     protected T controller;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         mockMvc = webAppContextSetup(context)
                 .apply(springSecurity())
