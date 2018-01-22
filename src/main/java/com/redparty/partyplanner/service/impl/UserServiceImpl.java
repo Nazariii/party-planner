@@ -6,7 +6,6 @@ import com.redparty.partyplanner.common.exception.ResourceNotFoundException;
 import com.redparty.partyplanner.repository.UserRepository;
 import com.redparty.partyplanner.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Long id) {
-        return userRepository.findOne(id)
+        return userRepository.findOneById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
     }
 
@@ -53,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Long id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     @Override

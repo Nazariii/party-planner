@@ -3,33 +3,18 @@ package com.redparty.partyplanner.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.redparty.partyplanner.RESTIntegrationTestBase;
 import com.redparty.partyplanner.common.domain.Event;
-import com.redparty.partyplanner.common.domain.User;
 import com.redparty.partyplanner.common.domain.dto.EventDTO;
-import com.redparty.partyplanner.repository.UserRepository;
 import com.redparty.partyplanner.service.UserService;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.mock.http.MockHttpOutputMessage;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
-import java.io.IOException;
-import java.util.Arrays;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WithMockUser(username = "email", password = "$2a$10$O2EO.dePSJNsu/sNEcQa5ej2leCa8B.Q95A2pQ.OOj.9bFPLHplBO")
 public class EventControllerTest extends RESTIntegrationTestBase<EventController> {
@@ -51,7 +36,7 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
                 .andExpect(jsonPath("$[0].name", is(NAME)))
                 .andExpect(jsonPath("$[0].id", is(EVENT_ID)))
                 .andExpect(jsonPath("$[0].eventStatus", is(EVENT_STATUS)));
-                //.andDo(print());
+        //.andDo(print());
     }
 
     @Test
@@ -82,10 +67,10 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
         String json = mapper.writeValueAsString(event);
 
         mockMvc.perform(post(BASE)
-                    .with(csrf())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(json)
-                    .accept(MediaType.APPLICATION_JSON))
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(NAME)))
                 .andExpect(jsonPath("$.eventStatus", is(EVENT_STATUS)));
@@ -99,11 +84,11 @@ public class EventControllerTest extends RESTIntegrationTestBase<EventController
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(event);
 
-        mockMvc.perform(post(BASE )
-                    .with(csrf())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(json)
-                    .accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post(BASE)
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name", is(NAME)))
                 .andExpect(jsonPath("$.eventStatus", is("HIDDEN")));

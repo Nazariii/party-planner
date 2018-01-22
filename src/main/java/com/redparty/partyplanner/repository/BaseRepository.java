@@ -12,11 +12,9 @@ public interface BaseRepository<T, ID extends Serializable> extends Repository<T
 
     <S extends T> Optional<S> save(S entity);
 
-    Optional<T> findOne(ID id);
+    Optional<T> findOneById(ID id);
 
-    boolean exists(ID id);
-
-    void delete(ID id);
+    void deleteById(ID id);
 
     List<T> findAll();
 }

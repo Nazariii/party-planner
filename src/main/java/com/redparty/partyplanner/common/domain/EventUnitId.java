@@ -3,7 +3,6 @@ package com.redparty.partyplanner.common.domain;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
 public class EventUnitId implements Serializable {

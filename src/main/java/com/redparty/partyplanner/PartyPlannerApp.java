@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.Scope;
@@ -25,9 +24,6 @@ public class PartyPlannerApp {
     private static final Logger log = LoggerFactory.getLogger(PartyPlannerApp.class);
 
     public static void main(String[] args) {
-
-        log.debug("+++++++++++++++++++++++++++ SPRING BOOT ++++++++++++++++++++++++++++++++");
-
         SpringApplication.run(PartyPlannerApp.class, args);
     }
 
